@@ -33,7 +33,7 @@ Building something big with an AI agent tends to fail in three ways:
 In Claude Code:
 
 ```
-/plugin marketplace add javimoya/claude
+/plugin marketplace add javimoya/jm
 /plugin install jm@jm
 ```
 
@@ -158,8 +158,8 @@ Developing locally? Point the marketplace at your checkout instead of GitHub:
 If you'd rather not use the plugin system, the `install.sh` script copies the skills straight into your Claude Code skills directory (`~/.claude/skills/`):
 
 ```bash
-git clone https://github.com/javimoya/claude.git
-cd claude
+git clone https://github.com/javimoya/jm.git
+cd jm
 ./install.sh          # CLAUDE_SKILLS_DIR=/custom/path ./install.sh to override
 ./uninstall.sh        # to remove them again
 ```
