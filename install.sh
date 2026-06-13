@@ -1,52 +1,49 @@
 #!/usr/bin/env bash
 #
 # ALTERNATIVE install (without the plugin system).
-# Copies the jm skills into your Claude Code skills directory.
+# Copies the jm commands into ~/.claude/commands/jm/ (so they're invoked as /jm:ideate,
+# /jm:discover, ... — same as the plugin) and the shared library into ~/.claude/jm-shared/.
 #
-# Prefer the plugin install if you can (see the README) — it namespaces the commands as
-# /jm:ideate and can't collide with your other skills. With THIS method the skills land as
-# personal skills and the commands are the BARE verbs: /ideate /discover /build /audit /orient
-# (the jm-shared library is internal and not invoked directly).
+# Prefer the plugin install (see the README) if you can — it auto-updates. This manual copy
+# does not; re-run after `git pull`.
 #
-# Safe to re-run: any existing skill of the same name is backed up first.
-#
-# Usage:
-#   ./install.sh
-#   CLAUDE_SKILLS_DIR=/custom/path ./install.sh
+# Safe to re-run: an existing manual install is backed up to *.bak.<timestamp> first.
 #
 set -euo pipefail
 
-SKILLS=(ideate discover build audit orient jm-shared)
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SRC="$SCRIPT_DIR/skills"
-DEST="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
+CMD_SRC="$SCRIPT_DIR/commands"
+SHARED_SRC="$SCRIPT_DIR/jm-shared"
 
-if [ ! -d "$SRC" ]; then
-  echo "error: can't find the skills/ folder next to this script ($SRC)." >&2
+CMD_DEST="$HOME/.claude/commands/jm"
+SHARED_DEST="$HOME/.claude/jm-shared"
+
+if [ ! -d "$CMD_SRC" ] || [ ! -d "$SHARED_SRC" ]; then
+  echo "error: run this from the repo root (commands/ and jm-shared/ not found)." >&2
   exit 1
 fi
 
-echo "Installing jm skills (manual / non-plugin method)"
-echo "  from: $SRC"
-echo "  to:   $DEST"
-echo
-
-mkdir -p "$DEST"
-
 stamp="$(date +%Y%m%d-%H%M%S)"
-for name in "${SKILLS[@]}"; do
-  target="$DEST/$name"
-  if [ -e "$target" ]; then
-    mv "$target" "$target.bak.$stamp"
-    echo "  • $name — existing version backed up to $(basename "$target.bak.$stamp")"
-  else
-    echo "  • $name — installed"
-  fi
-  cp -R "$SRC/$name" "$target"
-done
+echo "Installing jm (manual / non-plugin method)"
 
-echo
-echo "Done. With this manual method the commands are the bare verbs:"
-echo "  /ideate   /discover   /build   /audit   /orient"
-echo "(the README uses the plugin form /jm:build — here, drop the 'jm:' prefix.)"
+if [ -e "$CMD_DEST" ]; then
+  mv "$CMD_DEST" "$CMD_DEST.bak.$stamp"
+  echo "  • backed up existing commands/jm -> commands/jm.bak.$stamp"
+fi
+mkdir -p "$CMD_DEST"
+cp -R "$CMD_SRC"/. "$CMD_DEST"/
+
+if [ -e "$SHARED_DEST" ]; then
+  mv "$SHARED_DEST" "$SHARED_DEST.bak.$stamp"
+  echo "  • backed up existing jm-shared -> jm-shared.bak.$stamp"
+fi
+mkdir -p "$SHARED_DEST"
+cp -R "$SHARED_SRC"/. "$SHARED_DEST"/
+
+# The commands reference ${CLAUDE_PLUGIN_ROOT}/jm-shared/ — a variable that only exists for
+# installed plugins. Rewrite it to the absolute path this manual install uses.
+find "$CMD_DEST" -name '*.md' -print0 \
+  | xargs -0 sed -i '' "s#\${CLAUDE_PLUGIN_ROOT}/jm-shared/#$SHARED_DEST/#g"
+
+echo "Done. Commands installed under the 'jm' namespace:"
+echo "  /jm:ideate   /jm:discover   /jm:build   /jm:audit   /jm:orient"

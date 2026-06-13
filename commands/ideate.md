@@ -1,5 +1,4 @@
 ---
-name: ideate
 description: Kicks off a large project from a vague idea, or extends one already in progress. Runs divergent brainstorming (proposes ideas, alternatives, and prior art you hadn't thought of) and then convergent grilling, and scaffolds the .jm/ directory (VISION, PRINCIPLES, ROADMAP of vertical-slice phases, CONTEXT). Use it when starting a new project orchestrated with this framework, to extend an in-progress one with new features or ideas (it re-plans the pending phases), or to re-vision an existing one. It is the first stage; the later ones are /jm:discover, /jm:build, /jm:audit.
 model: opus
 effort: xhigh
@@ -13,8 +12,8 @@ project directory (cwd); the scaffolding lives in `<cwd>/.jm/`. You run in two m
 **new project** (scaffold + full ideation, §1–§5) or **extending an in-progress one** (grill the new
 ideas, then re-plan only the pending phases, §6) — §0 detects which.
 
-Shared protocols live in the sibling `../jm-shared/` directory (relative to this skill):
-`GRILLING.md`, `CONTEXT-FORMAT.md`, `ADR-FORMAT.md`,
+Shared protocols live in `${CLAUDE_PLUGIN_ROOT}/jm-shared/` — read each file there when a step
+references it: `GRILLING.md`, `CONTEXT-FORMAT.md`, `ADR-FORMAT.md`,
 `CONSTITUTION.md`, `CLOSE-FORMAT.md`, and the `*-FORMAT.md` specs (`VISION-FORMAT.md`,
 `ROADMAP-FORMAT.md`, `SPEC-FORMAT.md`, `PROGRESS-FORMAT.md`, `HANDOFF-FORMAT.md`, `JOURNAL-FORMAT.md`).
 
@@ -24,9 +23,9 @@ Check for `.jm/ROADMAP.md`:
   §1–§5.
   - If there's no `.jm/`, create it:
     - `mkdir -p .jm`
-    - Copy `../jm-shared/CONSTITUTION.md` → `.jm/PRINCIPLES.md` (verbatim; it's the constitution).
-    - Create `.jm/VISION.md` and `.jm/ROADMAP.md` following `../jm-shared/VISION-FORMAT.md`
-      and `../jm-shared/ROADMAP-FORMAT.md` (copy their structure block; fill them below).
+    - Copy `${CLAUDE_PLUGIN_ROOT}/jm-shared/CONSTITUTION.md` → `.jm/PRINCIPLES.md` (verbatim; it's the constitution).
+    - Create `.jm/VISION.md` and `.jm/ROADMAP.md` following `${CLAUDE_PLUGIN_ROOT}/jm-shared/VISION-FORMAT.md`
+      and `${CLAUDE_PLUGIN_ROOT}/jm-shared/ROADMAP-FORMAT.md` (copy their structure block; fill them below).
     - `CONTEXT.md`, `adr/`, `phases/`, and `JOURNAL.md` are created **lazily**: `CONTEXT.md` when the
       first term is resolved (format in `CONTEXT-FORMAT.md`), `adr/` with the first ADR, `phases/` in
       `/jm:discover`, and `JOURNAL.md` at the first close ritual (`JOURNAL-FORMAT.md`).
@@ -100,7 +99,7 @@ Reached from §0 when a ROADMAP with phases already exists. You're **re-planning
   structural change (add / split / reorder), as required by `ROADMAP-FORMAT.md`.
 
 ## Close — ritual + breadcrumb
-Run the close ritual (`../jm-shared/CLOSE-FORMAT.md`): make sure VISION/ROADMAP are written and
+Run the close ritual (`${CLAUDE_PLUGIN_ROOT}/jm-shared/CLOSE-FORMAT.md`): make sure VISION/ROADMAP are written and
 consistent, append a `JOURNAL.md` entry (create it the first time), then emit the one-line breadcrumb:
 - **New project:** *vision and roadmap created; you're at kickoff; next: `/clear` and then
   `/jm:discover` to discover phase 01 (`{slug}`)*.

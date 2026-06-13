@@ -1,5 +1,4 @@
 ---
-name: orient
 description: Reconstructs "where you are" in a project orchestrated with this framework by reading .jm/ (ROADMAP, latest HANDOFF/PROGRESS, active SPEC). Use it in a clean session when you don't remember where you left off. It does no work: it only orients you and tells you exactly which skill to launch next (/jm:ideate, /jm:discover, /jm:build, or /jm:audit).
 model: sonnet
 effort: medium

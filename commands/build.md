@@ -1,5 +1,4 @@
 ---
-name: build
 description: Implements a phase of a .jm/ project to the highest bar — no scope cuts, no tech debt, no "v1/v2" — one task at a time, with tests covering the acceptance criteria and a runnable deliverable. Checkpoints to PROGRESS.md at task boundaries or whenever you tell it to wrap up, carving unfinished work into a new follow-up task. Use it after the phase SPEC is approved, or to continue the next task.
 model: opus
 effort: xhigh
@@ -8,7 +7,7 @@ effort: xhigh
 # /jm:build — Phase implementation
 
 You implement a phase's SPEC **to the highest bar**. You work in the project directory (cwd); state
-lives in `<cwd>/.jm/`. Protocols and format specs in `../jm-shared/`.
+lives in `<cwd>/.jm/`. Protocols and format specs in `${CLAUDE_PLUGIN_ROOT}/jm-shared/`.
 
 ## 0. Precondition (don't build the wrong thing)
 Read the target phase's `status` in `.jm/ROADMAP.md` first:
@@ -39,7 +38,7 @@ Without this you can't claim "I broke nothing".
   constitution's test. The move is never to drop it: it's to **create a later task or a new phase**
   (record it in PROGRESS/ROADMAP). Never a silent drop.
 - **Record decisions as ADRs.** When you make an architectural or surprising implementation decision
-  that meets the three criteria of `../jm-shared/ADR-FORMAT.md`, write it to `.jm/adr/` and
+  that meets the three criteria of `${CLAUDE_PLUGIN_ROOT}/jm-shared/ADR-FORMAT.md`, write it to `.jm/adr/` and
   reference it in the HANDOFF. The "why" must survive in the docs, not just in your head.
 
 ## 5. Checkpoint & task splitting
@@ -51,7 +50,7 @@ triggers split the work:
   before starting the next.
 
 To checkpoint:
-- Update `PROGRESS.md` (create it following `../jm-shared/PROGRESS-FORMAT.md` the first time):
+- Update `PROGRESS.md` (create it following `${CLAUDE_PLUGIN_ROOT}/jm-shared/PROGRESS-FORMAT.md` the first time):
   task, done / remaining / **where to resume** (file:line, next concrete step) / files touched.
 - If work remains in the current task, **carve the remainder into a new follow-up task** in the plan.
 - Leave the tree in a clean, compiling state.
@@ -63,14 +62,14 @@ Never push a degrading session. Cutting early and handing off cleanly always win
 When the phase is complete:
 - Build the **deliverable** and **run the SPEC's "How to see it" yourself**; record the real result.
 - Re-run the full suite: **green**, with the delta against the baseline.
-- Write the `HANDOFF.md` draft (following `../jm-shared/HANDOFF-FORMAT.md`): what was built,
+- Write the `HANDOFF.md` draft (following `${CLAUDE_PLUGIN_ROOT}/jm-shared/HANDOFF-FORMAT.md`): what was built,
   decisions, how to verify + real result, test status baseline→final, open threads. Set
   `status` → `auditing`.
 - **Self-accounting gate**: before declaring it done, explicitly list everything you
   simplified/deferred/left pending and turn it into a phase/task or justify it with the test.
 
 ## Close — ritual + breadcrumb
-Run the close ritual (`../jm-shared/CLOSE-FORMAT.md`): persist `PROGRESS.md`/`HANDOFF.md` and the
+Run the close ritual (`${CLAUDE_PLUGIN_ROOT}/jm-shared/CLOSE-FORMAT.md`): persist `PROGRESS.md`/`HANDOFF.md` and the
 ROADMAP status, append a `JOURNAL.md` entry, then the breadcrumb:
 - If you split for a checkpoint: *"Task {N}/{M} of phase {NN} advanced; state in PROGRESS. Next:
   `/clear` + `/jm:build` (task {N+1})."*

@@ -1,27 +1,25 @@
 #!/usr/bin/env bash
 #
-# Removes the jm skills installed by install.sh from your Claude Code skills directory.
-# Backups created by install.sh (named *.bak.*) are left untouched.
-#
-# Usage:
-#   ./uninstall.sh
-#   CLAUDE_SKILLS_DIR=/custom/path ./uninstall.sh
+# Removes the manual (non-plugin) install done by install.sh.
+# Backups (named *.bak.*) are left untouched.
 #
 set -euo pipefail
 
-SKILLS=(ideate discover build audit orient jm-shared)
-DEST="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
+CMD_DEST="$HOME/.claude/commands/jm"
+SHARED_DEST="$HOME/.claude/jm-shared"
 
-echo "Removing jm skills from: $DEST"
+echo "Removing jm manual install"
 removed=0
-for name in "${SKILLS[@]}"; do
-  if [ -e "$DEST/$name" ]; then
-    rm -rf "$DEST/$name"
-    echo "  • $name — removed"
-    removed=$((removed + 1))
-  fi
-done
-
+if [ -e "$CMD_DEST" ]; then
+  rm -rf "$CMD_DEST"
+  echo "  • removed ~/.claude/commands/jm"
+  removed=1
+fi
+if [ -e "$SHARED_DEST" ]; then
+  rm -rf "$SHARED_DEST"
+  echo "  • removed ~/.claude/jm-shared"
+  removed=1
+fi
 if [ "$removed" -eq 0 ]; then
   echo "  (nothing to remove)"
 fi

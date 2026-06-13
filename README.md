@@ -2,7 +2,7 @@
 
 **Build big things with [Claude Code](https://claude.com/claude-code) — complete, robust, and phase by phase. No scope cuts, no half-finished work, no lost context.**
 
-`jm` is a small Claude Code plugin: five *skills* (slash commands) that turn a vague idea into a finished, robust product. It works by breaking the work into **phases**, building each one to a high bar in its own clean session, and keeping every bit of project state on disk — so any fresh session can pick up exactly where the last one stopped.
+`jm` is a small Claude Code plugin: five *slash commands* that turn a vague idea into a finished, robust product. It works by breaking the work into **phases**, building each one to a high bar in its own clean session, and keeping every bit of project state on disk — so any fresh session can pick up exactly where the last one stopped.
 
 It is opinionated on purpose. Its prime directive:
 
@@ -155,40 +155,28 @@ Developing locally? Point the marketplace at your checkout instead of GitHub:
 
 ## Alternative install (without the plugin)
 
-If you'd rather not use the plugin system, the `install.sh` script copies the skills straight into your Claude Code skills directory (`~/.claude/skills/`):
+Prefer the plugin install above. If you'd rather not use the plugin system, `install.sh` copies the commands into `~/.claude/commands/jm/` and the shared library into `~/.claude/jm-shared/`, giving you the **same `/jm:ideate` … `/jm:orient` commands** as the plugin:
 
 ```bash
 git clone https://github.com/javimoya/jm.git
 cd jm
-./install.sh          # CLAUDE_SKILLS_DIR=/custom/path ./install.sh to override
-./uninstall.sh        # to remove them again
+./install.sh          # copy into ~/.claude
+./uninstall.sh        # remove again
 ```
 
-It's safe to re-run: any existing skill of the same name is backed up to `<name>.bak.<timestamp>` first.
-
-**One difference to know:** the plugin namespaces commands as `/jm:build`. The manual install drops them in as personal skills, so the commands are the **bare verbs** — wherever this README says `/jm:build`, use `/build`:
-
-| Plugin | Manual install |
-|---|---|
-| `/jm:ideate` | `/ideate` |
-| `/jm:discover` | `/discover` |
-| `/jm:build` | `/build` |
-| `/jm:audit` | `/audit` |
-| `/jm:orient` | `/orient` |
-
-Because those bare names are generic, they can collide with other skills you've installed — the plugin method namespaces them and avoids that, so prefer it unless you have a reason not to.
+Safe to re-run: any existing manual install is backed up to `*.bak.<timestamp>` first. This method doesn't auto-update — re-run `./install.sh` after `git pull`.
 
 ### Requirements
 
 - [Claude Code](https://claude.com/claude-code) — CLI, desktop app, or IDE extension.
-- The skills request Opus with high effort by default (`model:` / `effort:` in each `SKILL.md`); edit those fields to taste.
+- The commands request Opus with high effort by default (`model:` / `effort:` in each `commands/*.md`); edit those fields to taste.
 
 ---
 
 ## Customizing
 
 - **`jm` is the command namespace** (so `/jm:build` etc.); `.jm/` is the state folder in your projects.
-- Everything is plain Markdown — open any skill's `SKILL.md` or the `skills/jm-shared/*-FORMAT.md` templates and adjust the wording, the bar, or the document formats to fit your team.
+- Everything is plain Markdown — open any `commands/<name>.md` or the `jm-shared/*-FORMAT.md` templates and adjust the wording, the bar, or the document formats to fit your team.
 
 ---
 

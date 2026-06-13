@@ -1,5 +1,4 @@
 ---
-name: audit
 description: Independent fresh-eyes phase-close audit for a .jm/ project. Hunts hidden scope cuts, tech debt, TODOs, stubs, "for now", uncovered edge cases, and decorative tests; runs the suite and the SPEC's "How to see it" to confirm the acceptance criteria. Emits a PASS/FAIL verdict that gates the phase close. Use it in a clean session after /jm:build of a phase.
 model: opus
 effort: xhigh
@@ -48,7 +47,7 @@ Actively look for (grep + reading):
   `status` → `implementing`. The phase **does not close**.
 
 ## Close — ritual + breadcrumb
-Run the close ritual (`../jm-shared/CLOSE-FORMAT.md`): finalize the HANDOFF verdict and the
+Run the close ritual (`${CLAUDE_PLUGIN_ROOT}/jm-shared/CLOSE-FORMAT.md`): finalize the HANDOFF verdict and the
 ROADMAP status, append a `JOURNAL.md` entry, then the breadcrumb:
 - If PASS: *"Phase {NN} audited and CLOSED (done). Next: `/clear` + `/jm:discover` for phase {MM}."* (or
   "project complete" if it was the last).

@@ -1,5 +1,4 @@
 ---
-name: discover
 description: Low-level discovery of ONE phase of a .jm/ project. Grills to produce the phase's SPEC (goal, vertical slice, testable acceptance criteria, deliverable and "How to see it", and a task plan sized so each task fits one fresh build session). Sharpens CONTEXT/ADRs inline and, if it discovers new things, mutates the ROADMAP. Use it at the start of a phase, before /jm:build.
 model: opus
 effort: xhigh
@@ -11,7 +10,7 @@ You turn a ROADMAP phase (today one line) into a **SPEC: a testable contract** t
 implement with no further questions. You work in the project directory (cwd); state lives in
 `<cwd>/.jm/`.
 
-Shared protocols in `../jm-shared/` (`GRILLING.md`, `CONTEXT-FORMAT.md`, `ADR-FORMAT.md`,
+Shared protocols in `${CLAUDE_PLUGIN_ROOT}/jm-shared/` (`GRILLING.md`, `CONTEXT-FORMAT.md`, `ADR-FORMAT.md`,
 `SPEC-FORMAT.md`).
 
 ## 1. Light orientation + constitution
@@ -49,12 +48,12 @@ phase** (or reorder/split phases) in the ROADMAP and note it in the changelog. I
 architectural pivot, add an ADR as well.
 
 ## 5. Write the SPEC
-Write `.jm/phases/NN-slug/SPEC.md` following `../jm-shared/SPEC-FORMAT.md`. Only when the
+Write `.jm/phases/NN-slug/SPEC.md` following `${CLAUDE_PLUGIN_ROOT}/jm-shared/SPEC-FORMAT.md`. Only when the
 "Open questions" list is **empty** and the contract is complete: empty (or drop) that section and set
 the phase `status` → `spec-ready` in the ROADMAP. If questions remain, leave it `discovering`.
 
 ## Close — ritual + breadcrumb + GATE
-Run the close ritual (`../jm-shared/CLOSE-FORMAT.md`): persist the SPEC (partial or complete),
+Run the close ritual (`${CLAUDE_PLUGIN_ROOT}/jm-shared/CLOSE-FORMAT.md`): persist the SPEC (partial or complete),
 update the ROADMAP status, append a `JOURNAL.md` entry, then the breadcrumb.
 - **SPEC complete** (sign-off GATE — it needs your approval before implementing):
   *"Phase {NN}'s SPEC is ready at `.jm/phases/NN-slug/SPEC.md` ({M} tasks). Review and approve
