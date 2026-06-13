@@ -1,0 +1,18 @@
+{
+  "name": "jm",
+  "owner": {
+    "name": "Francisco J. Moya",
+    "email": "francisco.j.moya@gmail.com"
+  },
+  "metadata": {
+    "description": "The jm workflow skills for Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "jm",
+      "source": "./",
+      "description": "A disciplined, multi-session workflow for building large projects to a high bar: ideate then discover then build then audit, one phase per clean session, with all project state kept on disk.",
+      "category": "productivity"
+    }
+  ]
+}
