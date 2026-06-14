@@ -1,7 +1,7 @@
 {
   "name": "jm",
   "description": "A disciplined, multi-session workflow for building large projects to a high bar: ideate then discover then build then audit, one phase per clean session, with all project state kept on disk.",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": {
     "name": "Francisco J. Moya",
     "email": "francisco.j.moya@gmail.com"

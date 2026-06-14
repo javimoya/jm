@@ -3,6 +3,14 @@
 All notable changes to `jm` are recorded here. Versions follow the `version` field in
 `.claude-plugin/plugin.json`.
 
+## 0.4.2
+
+### Changed
+- **Reframed the README "Why" around underspecified asks.** The lead failure mode is now "you didn't
+  fully say what you wanted" — the most common reason agent work disappoints — and the grilling bullet
+  sells the fix directly: a supercharged `grill-me` that pins down exactly what you want *and* helps
+  you discover the things you hadn't thought of.
+
 ## 0.4.1
 
 ### Changed
