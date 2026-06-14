@@ -3,6 +3,15 @@
 All notable changes to `jm` are recorded here. Versions follow the `version` field in
 `.claude-plugin/plugin.json`.
 
+## 0.4.1
+
+### Changed
+- **README headlines the grilling capability.** The "Why" section now opens its method list with
+  adversarial grilling as a first-class strength — diverge-then-converge interrogation across
+  `/jm:ideate` and `/jm:discover`, including the new "confirm before you stop questioning" checkpoint —
+  framed as a supercharged take on the well-known [`grill-me`](https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md)
+  skill, and paired with a new "the idea was never sharpened" failure mode.
+
 ## 0.4.0
 
 ### Added
