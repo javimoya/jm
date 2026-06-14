@@ -2,11 +2,11 @@
 
 **Build big things with [Claude Code](https://claude.com/claude-code), one phase at a time, without quietly cutting scope or losing track of where you left off.**
 
-`jm` is a small Claude Code plugin: a handful of *slash commands* that take a vague idea and turn it into a finished, robust product. It works by splitting the work into **phases**, building each one to a high bar in its own clean session, and writing all the project state to disk, so any fresh session can pick up exactly where the last one stopped.
+`jm` is a small Claude Code plugin: a handful of *slash commands* that take a rough idea and turn it into a finished product. It splits the work into phases, builds each phase to an agreed bar in its own clean session, and writes the project state to disk so any fresh session can pick up where the last one stopped.
 
-It's opinionated on purpose. Its prime directive:
+It's opinionated on purpose. The prime directive:
 
-> **The final product is complete and robust to the agreed bar. Nothing gets silently dropped. It either becomes more work, or it's written down as a deliberate, approved boundary.**
+> The final product is complete to the agreed bar. Nothing gets silently dropped. Anything left out either becomes more work or gets written down as a deliberate, approved boundary.
 
 Once installed, the commands live under the `jm` namespace: `/jm:ideate`, `/jm:discover`, `/jm:build`, `/jm:audit`, `/jm:orient`, `/jm:wrap`, `/jm:capture`.
 
@@ -16,23 +16,23 @@ Once installed, the commands live under the `jm` namespace: `/jm:ideate`, `/jm:d
 
 Building something big with an AI agent usually falls apart in a few predictable ways.
 
-**You didn't fully say what you wanted.** The most common way agent work disappoints isn't bad code. It's an underspecified ask. You describe what you want loosely, the agent fills the gaps with its own assumptions, and the result isn't what you had in mind.
+**You didn't fully say what you wanted.** Agent work usually disappoints because the brief was loose, not because the code was bad. You describe the goal vaguely, the agent fills the gaps with its own assumptions, and what comes back isn't what you had in mind.
 
-**Scope quietly shrinks.** "I'll stub this for now," "v1 is fine," "good enough," and the thing you end up with is full of holes.
+**Scope quietly shrinks.** "I'll stub this for now." "v1 is fine." "Good enough." String enough of those together and you end up with something full of holes.
 
-**Context rots.** One long session drifts off, forgets what you decided an hour ago, and the quality drops.
+**Context rots.** A long session drifts, forgets a decision you made an hour ago, and the quality drops with it.
 
-**You lose your place.** You come back the next day and neither you nor the agent can remember where things stood.
+**You lose your place.** Come back the next day and neither you nor the agent can say where things stood.
 
-**Nobody remembers why.** A decision you made last week goes invisible this week, so the agent re-guesses it, or you quietly contradict it without noticing.
+**Nobody remembers why.** A call you made last week is invisible this week, so the agent re-guesses it, or you contradict it without noticing.
 
-`jm` handles each of these as a method rather than a model:
+`jm` treats each of these as a process problem rather than a model problem:
 
-- **A supercharged [`grill-me`](https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md).** Before any code, it interrogates you one question at a time, each with its recommended answer, until what you want is *completely and precisely defined*, so the agent never has to guess. And it diverges first: surfacing options, prior art, and ideas you might not have considered, so it doesn't just capture your idea, it helps you discover the things you hadn't thought of. Woven through `/jm:ideate` and `/jm:discover`, it always checks in before it stops rather than quietly deciding you're done.
-- A **constitution** that bans cuts and turns "later" into "a new phase" instead of a quiet deletion.
-- **Phases**: vertical slices, each one built and verified in its own fresh session with clean context.
-- A **`.jm/` folder** in your repo that holds the single source of truth. Any new session rebuilds the full picture by reading it.
-- **Every decision on the record.** The *why* behind hard calls becomes an ADR and your domain terms a glossary, so a fresh agent acts on your past reasoning instead of guessing, and can flag it when a new ask contradicts a call you already made.
+- **An extended [`grill-me`](https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md).** Before any code, it asks one question at a time, each with a recommended answer, until the goal is precise enough that the agent never has to guess. It also diverges before it converges: it surfaces options and prior art you might not have considered, so it helps you find ideas instead of only recording the ones you walked in with. It runs through `/jm:ideate` and `/jm:discover`, and it checks in before it stops rather than deciding on its own that you're done.
+- A **constitution** that bans cuts: "later" turns into a new phase rather than a quiet deletion.
+- **Phases**: vertical slices, each built and verified in its own fresh session.
+- A **`.jm/` folder** in your repo holds the single source of truth, and any new session rebuilds the full picture by reading it.
+- **Every decision on the record.** The reasoning behind hard calls becomes an ADR, and your domain terms become a glossary, so a fresh agent acts on your past reasoning rather than re-deriving it. It can also flag a new ask that contradicts a call you already made.
 
 ---
 
@@ -51,9 +51,9 @@ Then, from inside the folder of the project you want to build, run:
 /jm:ideate      # turn your idea into a vision + a roadmap of phases
 ```
 
-Every step ends with a one-line breadcrumb that tells you exactly what to run next.
+Every step ends with a one-line breadcrumb telling you exactly what to run next.
 
-> Stuck, or coming back after a break? Run **`/jm:orient`**. It reads your project and tells you where you are and what to do next, and it changes nothing.
+> Stuck, or coming back after a break? Run **`/jm:orient`**. It reads your project, tells you where you are and what to do next, and changes nothing.
 
 > Don't want to use the plugin system? See **[Alternative install](#alternative-install-without-the-plugin)** below.
 
@@ -76,10 +76,10 @@ flowchart LR
 You work through a project one phase at a time. A phase is a vertical slice, something you can actually run and look at, and it goes through three stages. Each stage runs in its own clean Claude session, so use `/clear` between them to keep the context sharp.
 
 1. **Discover** (`/jm:discover`) questions you until the phase is a precise, testable spec.
-2. **Build** (`/jm:build`) implements that spec to the highest bar, with real tests, and checkpoints as it goes.
+2. **Build** (`/jm:build`) implements that spec to the agreed bar, with real tests, and checkpoints as it goes.
 3. **Audit** (`/jm:audit`) is an independent, fresh-eyes review that hunts for shortcuts and can fail the phase, which sends it back to build.
 
-`/jm:ideate` runs at the start, and again once the roadmap is complete to plan the next wave. When an idea pops up mid-flight, `/jm:capture` files it into the system (a note on a planned phase, or a new phase) instead of letting it slip. `/jm:orient` is your GPS at any point.
+`/jm:ideate` runs at the start, and again once the roadmap is complete to plan the next wave. When an idea pops up mid-flight, `/jm:capture` files it into the system (a note on a planned phase, or a new phase) so it doesn't slip. `/jm:orient` is your GPS at any point.
 
 ---
 
@@ -89,11 +89,11 @@ You work through a project one phase at a time. A phase is a vertical slice, som
 |---|---|---|
 | **`/jm:ideate`** | Ideation and kickoff. Produces the vision and the roadmap of phases. Also plans the next wave once the roadmap is complete. Refuses to re-plan mid-flight (that's `/jm:capture`). | At kickoff, or when every phase is `done`. |
 | **`/jm:discover`** | Turns one roadmap phase into a testable SPEC (acceptance criteria, deliverable, task plan). Folds in any seeds captured for that phase. | At the start of each phase. |
-| **`/jm:build`** | Implements the phase's SPEC to the highest bar, one task at a time, with tests. Shows an intro then starts coding (`--gate` to pause for a go first). | After the SPEC is approved. |
+| **`/jm:build`** | Implements the phase's SPEC to the agreed bar, one task at a time, with tests. Shows an intro then starts coding (`--gate` to pause for a go first). | After the SPEC is approved. |
 | **`/jm:audit`** | Independent fresh-eyes audit. PASS closes the phase; FAIL sends it back. | After a phase is built. |
 | **`/jm:orient`** | Read-only GPS. Works out where you are and what's next. Changes nothing. | Any time you're lost or returning. |
-| **`/jm:wrap`** | On-demand checkpoint. Cuts the session you're in the middle of, carving in-progress work into a follow-up task (or saving open questions and partial findings), so nothing is lost. | Mid-build or mid-discover, when context degrades or you want to pause. |
-| **`/jm:capture`** | Files a new idea that surfaced on the fly into `.jm/` — a note on a planned phase, or a new phase — instead of Claude's native memory or a future you'll forget. Confirms before changing the roadmap. | Any time after ideate, when an idea pops up and work is in progress. |
+| **`/jm:wrap`** | On-demand checkpoint. Cuts the session you're in the middle of, carving in-progress work into a follow-up task (or saving open questions and partial findings) so nothing is lost. | Mid-build or mid-discover, when context degrades or you want to pause. |
+| **`/jm:capture`** | Files an idea that surfaced on the fly into `.jm/` (a note on a planned phase, or a new phase) rather than into Claude's native memory or a future you'll forget. Confirms before changing the roadmap. | Any time after ideate, when an idea pops up and work is in progress. |
 
 ---
 
@@ -118,7 +118,7 @@ Everything the workflow knows lives in a `.jm/` folder at the root of your proje
         └── HANDOFF.md   # what was built + how to verify + append-only audit history
 ```
 
-Commit this folder alongside your code. Anyone (you tomorrow, a teammate, a fresh agent) can run `/jm:orient` and carry on.
+Commit this folder alongside your code. Anyone (you tomorrow, a teammate, or a fresh agent) can run `/jm:orient` and carry on.
 
 ---
 
@@ -142,10 +142,10 @@ This is what lets the skills route themselves: run `/jm:build` on a phase that i
 These are enforced by `PRINCIPLES.md` (the constitution) and by the skills themselves.
 
 - **Decompose, don't drop, or set an explicit boundary.** If something is "for later," it becomes a new phase or task. If it's genuinely out of scope, it goes into the VISION as a recorded, approved boundary. It never just disappears.
-- **Capture, don't stash.** An idea that pops up mid-build doesn't go into the agent's private memory or a sticky note you'll forget. `/jm:capture` (or the build itself, inline) files it into `.jm/` — a new phase, or a note on a planned one — after you confirm. Nothing the project should remember lives outside `.jm/`.
+- **Capture, don't stash.** An idea that pops up mid-build doesn't go into the agent's private memory or a sticky note you'll forget. `/jm:capture` (or the build itself, inline) files it into `.jm/` as a new phase or a note on a planned one, after you confirm. Nothing the project should remember lives outside `.jm/`.
 - **Verify before you claim.** A per-project `RUNBOOK.md` pins the exact full-suite command so build and audit measure the same thing. Record a baseline before you start, run the real deliverable before you call it done, and let an independent fresh-eyes audit confirm each criterion. Every attempt is kept in an append-only history.
 - **Own only what you changed.** Builds record their base commit and the tree's pre-existing dirty paths, so your own uncommitted work never gets reverted or blamed on a phase.
-- **Clean context per step.** Each stage runs in a fresh session and hands off through `.jm/`, so quality never degrades inside a bloated session.
+- **Clean context per step.** Each stage runs in a fresh session and hands off through `.jm/`, so quality doesn't degrade inside a bloated session.
 - **Resumable everywhere.** Long discovery sessions and long builds can be cut partway through and continued; open questions and "where to resume" get written down. Run **`/jm:wrap`** to checkpoint on demand the moment the context starts to degrade.
 
 ---
@@ -169,7 +169,7 @@ Developing locally? Point the marketplace at your checkout instead of GitHub:
 
 ## Alternative install (without the plugin)
 
-The plugin install above is the recommended path. If you'd rather skip the plugin system, `install.sh` copies the commands into `~/.claude/commands/jm/` and the shared library into `~/.claude/jm-shared/`, which gives you the same `/jm:ideate` … `/jm:orient` commands as the plugin:
+The plugin install above is the recommended path. If you'd rather skip the plugin system, `install.sh` copies the commands into `~/.claude/commands/jm/` and the shared library into `~/.claude/jm-shared/`, which gives you the same `/jm` commands as the plugin:
 
 ```bash
 git clone https://github.com/javimoya/jm.git
