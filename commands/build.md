@@ -1,8 +1,8 @@
 ---
-description: Implements a phase of a .jm/ project to the highest bar — no scope cuts, no tech debt, no "v1/v2" — one task at a time, with tests covering the acceptance criteria and a runnable deliverable. Checkpoints to PROGRESS.md at task boundaries or whenever you tell it to wrap up, carving unfinished work into a new follow-up task. Use it after the phase SPEC is approved, or to continue the next task.
+description: Implements a phase of a .jm/ project to the highest bar — no scope cuts, no tech debt, no "v1/v2" — one task at a time, with tests covering the acceptance criteria and a runnable deliverable. Checkpoints to PROGRESS.md at task boundaries or whenever you tell it to wrap up, carving unfinished work into a new follow-up task. By default it shows a short intro and then starts coding; pass --gate to pause for your go/no-go before touching code. Use it after the phase SPEC is approved, or to continue the next task.
 model: inherit
 disable-model-invocation: true
-argument-hint: "[phase-id-or-slug]"
+argument-hint: "[phase-id-or-slug] [--gate]"
 ---
 
 # /jm:build — Phase implementation
@@ -16,7 +16,8 @@ else the active phase, else the lowest ready `pending`; an explicit phase that i
 **stop** and report the conflict, don't start parallel work). Then read its `status` in `.jm/ROADMAP.md`:
 - `pending`/`discovering` → there's no approved SPEC yet. **Stop** and send the user to `/jm:discover`
   (the SPEC must exist before building). Don't write code.
-- `spec-ready` → proceed; §2's start gate is the human approval.
+- `spec-ready` → proceed; you already approved the SPEC by reviewing it and launching build (with
+  `--gate`, §2 adds an explicit in-session go before any code).
 - `implementing` → proceed; resume from `PROGRESS.md`. **If you arrived from an audit FAIL** (the
   HANDOFF's latest `Attempt` is FAIL with open `F-NN`), work **only** the `Audit N / F-NN` remediation
   tasks — nothing else — then return to audit via §6.
@@ -32,11 +33,20 @@ else the active phase, else the lowest ready `pending`; an explicit phase that i
   *boundary* (taken to the user), never a quiet omission.
 - Read the phase's `SPEC.md` (acceptance criteria + their evidence types), its `PROGRESS.md` (which
   task is next), `.jm/RUNBOOK.md` (how to run and test — create it per `${CLAUDE_PLUGIN_ROOT}/jm-shared/RUNBOOK-FORMAT.md`
-  if it's missing), `CONTEXT.md`, and the ADRs.
+  if it's missing), `CONTEXT.md`, the ADRs, and `.jm/NOTES.md` (any open seeds targeting this phase —
+  `/jm:discover` should already have folded them into the SPEC; check none was missed).
 
-## 2. Start gate (human in the loop)
-Before touching code, **show the user the acceptance criteria + the deliverable + the task you're
-about to do**, and ask for go/no-go. If the SPEC wasn't approved yet, this is their approval.
+## 2. Intro (and an optional gate)
+Before touching code, **always show the user the acceptance criteria + the deliverable + the task
+you're about to do** — the intro that anchors the session.
+- **By default**, proceed straight to §3 and start building. Launching `/jm:build` after reviewing the
+  SPEC **is** the go; don't ask again.
+- **With `--gate`**, stop after the intro and **wait for an explicit go/no-go** before any code
+  change. Use it when you want a final in-session sign-off on the SPEC.
+
+**Inside an approved SPEC, decide and advance.** The grilling already happened in `/jm:discover`;
+build implements the contract with no further questions. Reserve questions for `--gate`, the anti-cut
+reframe (§4), and genuine blockers — don't manufacture optionality mid-build.
 
 ## 3. Durable start (persist BEFORE touching code)
 After the go and **before any code change**, make the start recoverable — so an interrupted build is
@@ -65,6 +75,14 @@ never mistaken for "not started", and the user's own changes are never blamed on
   product → sequence it; record it in PROGRESS/ROADMAP), or **take it to the user as a boundary** (it's
   outside the product → get an explicit, recorded decision). Never a silent drop. **Append** any new
   phase per `ROADMAP-FORMAT.md`'s **Phase mutability** rule (never disturb a frozen phase's `#`/`slug`).
+- **New scope surfaced mid-build** — an idea, feature, or refinement that **isn't a cut of the current
+  task** (often the user raises it): don't park it in your head, in the HANDOFF alone, or in Claude's
+  native memory. Capture it now per `${CLAUDE_PLUGIN_ROOT}/jm-shared/CAPTURE.md` — **confirm with the
+  user first**, then write it into `.jm/` (a seed in `.jm/NOTES.md` targeting the relevant `pending`
+  phase(s), or a new `pending` phase + a seed targeting it, per `${CLAUDE_PLUGIN_ROOT}/jm-shared/NOTES-FORMAT.md`),
+  log it in the ROADMAP changelog and the HANDOFF's "Open threads", and **return to the task you were
+  on**. Never
+  *"I'll `/jm:ideate` it later"* as the only record — that's how a thread gets silently dropped.
 - **Record decisions as ADRs.** When you make an architectural or surprising implementation decision
   that meets the three criteria of `${CLAUDE_PLUGIN_ROOT}/jm-shared/ADR-FORMAT.md`, write it to `.jm/adr/` and
   reference it in the HANDOFF. The "why" must survive in the docs, not just in your head.

@@ -28,6 +28,10 @@ Shared protocols in `${CLAUDE_PLUGIN_ROOT}/jm-shared/` (`GRILLING.md`, `CONTEXT-
   and unblock per `ROADMAP-FORMAT.md`'s "Blocking & unblocking" (confirm `Unblock when`, restore
   `From`) only with the user's ok, else stop. If discovery itself hits an external wall, propose a
   block the same way rather than guessing.
+- **Read `.jm/NOTES.md`** (if present): the open seeds **targeting this phase's `slug`** are captured
+  ideas and refinements (`${CLAUDE_PLUGIN_ROOT}/jm-shared/NOTES-FORMAT.md`) left by `/jm:capture` or an
+  inline capture. They are **inputs you must fold into this SPEC** as you grill — not the contract
+  itself, and never to be dropped.
 
 ## 2. Grill the phase (the `GRILLING.md` protocol)
 One question at a time, with your recommended answer, exploring the code when the answer is there.
@@ -59,17 +63,27 @@ no deliverable and no tests of their own. The user can also checkpoint mid-build
 generously rather than optimistically.
 
 ## 4. Re-planning (if you discover new things)
-If discovery reveals work that doesn't belong in this phase: **don't cut it**. Create it as a **new
-phase** (or reorder/split phases) in the ROADMAP and note it in the changelog. If it's an
-architectural pivot, add an ADR as well.
+If discovery reveals work that doesn't belong in this phase, **don't cut it** — capture it per
+`${CLAUDE_PLUGIN_ROOT}/jm-shared/CAPTURE.md` (confirm with the user before mutating the ROADMAP; never
+Claude's native memory):
+- A **distinct new capability** → a **new phase** (or reorder/split phases) in the ROADMAP, noted in
+  the changelog; if it's an architectural pivot, add an ADR as well.
+- A **refinement that belongs to one or more other `pending` phases** → a **seed** in `.jm/NOTES.md`
+  targeting each by `slug` (`${CLAUDE_PLUGIN_ROOT}/jm-shared/NOTES-FORMAT.md`), folded when each phase
+  is later discovered.
 - **Only `pending` phases are mutable** — follow `${CLAUDE_PLUGIN_ROOT}/jm-shared/ROADMAP-FORMAT.md`'s **Phase
   mutability** rule: never change a frozen phase's `#`/`slug`, renumber/reorder within `pending`,
   append if no clean renumber, never delete a phase.
 
 ## 5. Write the SPEC
-Write `.jm/phases/NN-slug/SPEC.md` following `${CLAUDE_PLUGIN_ROOT}/jm-shared/SPEC-FORMAT.md`. Only when the
-"Open questions" list is **empty** and the contract is complete: empty (or drop) that section and set
-the phase `status` → `spec-ready` in the ROADMAP. If questions remain, leave it `discovering`.
+Write `.jm/phases/NN-slug/SPEC.md` following `${CLAUDE_PLUGIN_ROOT}/jm-shared/SPEC-FORMAT.md`. As you
+finalize it, **fold every open seed in `.jm/NOTES.md` that targets this phase into the SPEC**, then
+**check that phase's box** in the seed with a pointer to where it landed — an `AC-N`, a task, a CONTEXT
+term, or an ADR (`${CLAUDE_PLUGIN_ROOT}/jm-shared/NOTES-FORMAT.md`). A seed whose last box you just
+checked moves to `## Consumed`; one still awaiting other phases stays open. No seed is left behind.
+Only when the "Open questions" list is **empty**, this phase's seeds are all folded, and the contract
+is complete: empty (or drop) that section and set the phase `status` → `spec-ready` in the ROADMAP. If
+questions remain, leave it `discovering`.
 
 ## Close — ritual + breadcrumb + GATE
 Run the close ritual (`${CLAUDE_PLUGIN_ROOT}/jm-shared/CLOSE-FORMAT.md`): persist the SPEC (partial or complete),

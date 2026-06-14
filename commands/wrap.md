@@ -53,6 +53,10 @@ Persist exactly what the active command owns, following that command's own check
   work (the matching bullet above), then set `status` → `blocked` and write the `## Blocked phases`
   block (`From` = the working status, `Reason`, `Unblock when`) per `ROADMAP-FORMAT.md`.
 
+If a **new idea** surfaced this session and isn't yet in `.jm/`, capture it before you stop, per
+`${CLAUDE_PLUGIN_ROOT}/jm-shared/CAPTURE.md` (a note on a `pending` phase, or a new `pending` phase) —
+**never** Claude's native memory. Capturing is a quick durable write, not "starting new work".
+
 ## Close — ritual + breadcrumb
 Run the close ritual (`${CLAUDE_PLUGIN_ROOT}/jm-shared/CLOSE-FORMAT.md`, the **"Cut sessions"** path): the
 artifacts above are persisted, the ROADMAP `status` is coherent, append a `JOURNAL.md` entry, then

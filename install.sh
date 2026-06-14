@@ -65,4 +65,4 @@ find "$CMD_DEST" -name '*.md' -print0 | while IFS= read -r -d '' f; do
 done
 
 echo "Done. Commands installed under the 'jm' namespace:"
-echo "  /jm:ideate   /jm:discover   /jm:build   /jm:audit   /jm:orient   /jm:wrap"
+echo "  /jm:ideate   /jm:discover   /jm:build   /jm:audit   /jm:orient   /jm:wrap   /jm:capture"

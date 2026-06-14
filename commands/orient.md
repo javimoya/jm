@@ -30,6 +30,9 @@ You work in the project directory (cwd); state lives in `<cwd>/.jm/`.
   - `blocked` → the ROADMAP's `## Blocked phases` block (`From` / `Reason` / `Unblock when`); you'll
     point the user at the command that owns `From` (discover / build / audit) to resume once `Unblock
     when` holds (you only read — you never unblock).
+- **Captured seeds**: read `.jm/NOTES.md` (if present) — its `## Open seeds` are ideas captured by
+  `/jm:capture` or inline, awaiting their `/jm:discover`. Note which phases they target, so nothing
+  captured stays invisible.
 
 ## 3. Give the report (concise)
 In a few lines:
@@ -38,6 +41,9 @@ In a few lines:
 - **You are here**: phase {NN} `{slug}`, stage = {discovery | awaiting SPEC approval |
   implementation task {N}/{M} | audit}.
 - **What's next**: the concrete step — in discovery, name the next open question if the SPEC has one.
+- **Captured ideas** (only if any): the open seeds in `.jm/NOTES.md` and the phases they target, so
+  they're not forgotten. (A new idea on the fly goes into the system with `/jm:capture`, not Claude's
+  memory.)
 
 ## Close — breadcrumb
 End with the exact action line, e.g.:

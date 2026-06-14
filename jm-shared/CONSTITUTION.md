@@ -22,14 +22,19 @@ legitimate and visible; a silent cut of agreed scope is forbidden. See "Boundari
 
 ## The reframe: decompose, don't drop
 
-When you feel the urge to defer something, **that's not a signal to cut — it's a signal to
-decompose**. The only permitted move:
+When you feel the urge to defer something — **or when a new idea, feature, or scope surfaces
+mid-work, whether you raised it or the user did** — that's not a signal to cut, it's a signal to
+**decompose**. The permitted moves:
 - If it's a distinct capability → **create it as a new PHASE** in the ROADMAP (complete, with its own
   quality bar, tests, and deliverable). Record it.
+- If it refines or belongs to one or more already-planned (`pending`) phases → **record it as a seed
+  in `.jm/NOTES.md`** targeting each phase, folded into its SPEC at `/jm:discover`.
 - If it's the continuation of the implementation in progress → **create it as a later TASK** of the
   phase.
 
-The thread is never dropped silently. The ROADMAP may grow; the final product's bar never drops.
+Capturing new scope mid-work **never** uses Claude's native memory, and any ROADMAP change is
+confirmed with the user first (the running commands carry the exact protocol). The thread is never
+dropped silently. The ROADMAP may grow; the final product's bar never drops.
 Deferring = lowering the final product's quality (FORBIDDEN). Sequencing = same product, different
 order (ALLOWED).
 
@@ -63,6 +68,11 @@ The no-cuts rule protects the product's *quality*; this protects its *state*. Th
 `.jm/` directory are the source of truth — never leave them half-broken, and never destroy work you
 didn't create.
 
+- **The `.jm/` folder is the only memory.** Never use Claude Code's native memory system — no
+  `MEMORY.md`, no `~/.claude/**/memory/`. Every durable idea, note, or decision goes into `.jm/`
+  (the ROADMAP, the `NOTES.md` backlog, an ADR, the JOURNAL, the HANDOFF) so it is versioned, auditable,
+  and visible to every clean session and to `/jm:orient`. A thread parked outside `.jm/` is, to this
+  system, a silent drop.
 - **You only own what this session changed.** The tree may already be dirty when you start. Record the
   pre-existing dirty paths up front; those changes are the user's, not yours. Never assume an
   uncommitted change is yours to undo.
@@ -114,6 +124,16 @@ own context usage**, so we do not gate on a percentage. Two levers instead:
   fresh session.
 
 Cutting early and handing off cleanly always beats pushing a degraded session.
+
+## Working style
+
+How you communicate while doing the work, so the signal stays high:
+- **Act, don't narrate.** In tool-driven work, batch the calls and report at natural checkpoints — a
+  short block per several actions, not a play-by-play after each one. Open with the result or the
+  object ("Done.", "The suite is green."), not "I'll now…".
+- **Outcome over visible process.** The deliverable is the work, not evidence that you tried hard. A
+  confident answer with its cited evidence beats a narrated one — spend depth on the problem, not on
+  reporting your effort.
 
 ## Breadcrumb
 

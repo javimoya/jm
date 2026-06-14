@@ -3,6 +3,42 @@
 All notable changes to `jm` are recorded here. Versions follow the `version` field in
 `.claude-plugin/plugin.json`.
 
+## 0.5.0
+
+### Added
+- **Capture ideas on the fly — into `.jm/`, never Claude's native memory.** A new shared protocol
+  `jm-shared/CAPTURE.md` defines how a new idea, feature, or refinement that surfaces mid-work gets
+  recorded the moment it appears: triage it (a later **task**, a **note** on a planned `pending` phase,
+  or a brand-new `pending` **phase**), **confirm before mutating the ROADMAP**, then write it to
+  `.jm/`. Two entry points share it — inline (during `/jm:build` or `/jm:discover`) and the new
+  standalone command below.
+- **`/jm:capture` command.** A lightweight, invoke-anytime-after-ideate command that orients
+  read-only, lightly grills just enough to classify, confirms, and files the idea where it belongs.
+  For grabbing a stray idea with work in progress — without the heavyweight `/jm:ideate`.
+- **A single `.jm/NOTES.md` backlog.** A new artifact (`jm-shared/NOTES-FORMAT.md`) — one
+  project-level file, next to `ROADMAP.md` — holds **seeds**: ideas captured before a phase has a SPEC.
+  Seeds reference phases by their stable **`slug`** (so renumbering never moves or breaks them), and a
+  single seed can **target several phases**, each with its own checkbox. `/jm:discover` folds the seeds
+  targeting the phase it's discovering and checks their boxes; a seed is fully consumed (moved to
+  `## Consumed`, not deleted) only once every target is folded.
+
+### Changed
+- **The `.jm/` folder is now explicitly the only memory.** `PRINCIPLES.md` (the constitution) bans
+  Claude Code's native memory system outright (no `MEMORY.md`, no `~/.claude/**/memory/`): a thread
+  parked outside `.jm/` is, to this system, a silent drop. "Decompose, don't drop" gains a third case
+  (a refinement of one or more `pending` phases → a seed in the `NOTES.md` backlog).
+- **`/jm:build` starts coding by default.** The pre-code step now always shows the intro (acceptance
+  criteria + deliverable + task) but **no longer asks for a go/no-go** unless you pass the new
+  **`--gate`** flag — launching build after reviewing the SPEC is the approval. `/jm:build` also reads
+  `.jm/NOTES.md`, captures new scope inline per `CAPTURE.md`, and carries a one-line "inside an approved
+  SPEC, decide and advance" reinforcement.
+- **`/jm:ideate` no longer re-plans mid-flight.** It runs only at kickoff or once the **current roadmap
+  is complete** (every phase `done`); with work in progress it stops and routes a fresh idea to
+  `/jm:capture`. `/jm:discover` and `/jm:wrap` route new scope through `CAPTURE.md`; `/jm:orient`
+  surfaces phases that carry unconsumed `NOTES.md` seeds.
+- **A short "Working style" note in the constitution** (act, don't narrate; outcome over visible
+  process) keeps the signal high in tool-driven sessions.
+
 ## 0.4.3
 
 ### Changed
