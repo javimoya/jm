@@ -3,6 +3,22 @@
 All notable changes to `jm` are recorded here. Versions follow the `version` field in
 `.claude-plugin/plugin.json`.
 
+## 0.4.0
+
+### Added
+- **A confirmation checkpoint before questioning ends.** `/jm:ideate` and `/jm:discover` no longer
+  fall silent and move on the moment their planned questions run out: a new shared rule in
+  `GRILLING.md` ("Confirm before you stop questioning") makes them turn back to the user, **propose the
+  areas still worth exploring** (unexplored features/scenarios, edge cases, integrations, failure
+  modes), and let the user — not the running-out of the list — decide whether to keep going or wrap up.
+  Referenced from `ideate.md` §2 and `discover.md` §2.
+
+### Changed
+- **`/jm:ideate` diverges harder.** The divergence step now explicitly calls for lateral thinking —
+  proposing possible features, capabilities, and out-of-the-box ideas from adjacent products and other
+  domains — to open areas the user hasn't contemplated, fitting the vague-idea stage. Reinforced in
+  both `ideate.md` §2 and `GRILLING.md`.
+
 ## 0.3.1
 
 Follow-up hardening on 0.3.0: a real lifecycle for `blocked`, a graceful audit boundary for non-git

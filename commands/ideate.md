@@ -42,12 +42,17 @@ complete to the agreed bar; effort is never a reason to cut; nothing is dropped 
 decomposed into a phase/task, or recorded as an explicit, approved boundary.**
 
 ## 2. Diverge, then converge (the `GRILLING.md` protocol)
-- **Diverge first**: faced with the vague idea, bring options, alternative approaches, prior art,
-  risks the user hasn't seen, "have you considered X?". Don't just collect what's already in their
-  head — widen the solution space.
+- **Diverge first**: the idea is still vague, so widen the solution space hard. Bring options,
+  alternative approaches, and prior art — and **think laterally**: propose possible features,
+  capabilities, and out-of-the-box ideas the user hasn't named (angles from adjacent products and
+  other domains), plus risks they haven't seen and "have you considered X?". Open areas they haven't
+  contemplated; don't just collect what's already in their head.
 - **Then converge**: grill **one question at a time, with your recommended answer**, walking the
   decision tree and resolving dependencies. Sharpen fuzzy language into `CONTEXT.md` **inline**
   (format in `CONTEXT-FORMAT.md`). Offer ADRs only on the three criteria of `ADR-FORMAT.md`.
+- **Before you stop, confirm** (`GRILLING.md` → "Confirm before you stop questioning"): when you think
+  the questions are exhausted, don't jump to writing the VISION — propose the areas still worth
+  exploring and let the user decide whether to keep going or move on.
 
 ## 3. Write the VISION
 Fill `.jm/VISION.md`: problem/opportunity, for whom, what it is and isn't, **constraints and accepted

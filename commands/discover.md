@@ -47,6 +47,11 @@ SPEC's **"Open questions (working)"** list (most important first) — that list 
 The phase stays `discovering` while it's non-empty, so a long discovery can be cut and continued in a
 fresh session.
 
+**Before you treat the questions as done, confirm** (`GRILLING.md` → "Confirm before you stop
+questioning"): when the "Open questions" list looks empty, don't jump straight to a finished SPEC —
+name the areas still worth probing (uncovered acceptance criteria, edge cases, failure modes,
+integrations) and let the user decide whether to keep grilling or close the contract.
+
 ## 3. Size into tasks
 Estimate whether the implementation **comfortably** fits one `/jm:build` session. If it doesn't,
 **split it into N small, ordered tasks**. Remember: tasks split *only* the implementation; they have

@@ -41,8 +41,19 @@ true?"*
 
 ### Bring what the user hasn't thought of (especially in ideation)
 Don't just collect the user's ideas. Add divergence: design alternatives, prior art, approaches from
-other domains, risks they haven't seen, and "have you considered X?". In ideation, **diverge first**
-(generate and contrast options), **then converge** (grill until it's nailed down).
+other domains, risks they haven't seen, and "have you considered X?". **In ideation, push laterally**:
+propose possible features, capabilities, and out-of-the-box ideas the user hasn't named — angles from
+adjacent products and other domains — to open up areas they haven't contemplated, not just refine the
+ones already in their head. **Diverge first** (generate and contrast options), **then converge** (grill
+until it's nailed down).
+
+### Confirm before you stop questioning
+When you think you've worked through the questions you planned, **don't silently move on** to writing.
+Turn back to the user: name the areas you have *not* yet probed and **propose concrete ones worth
+opening** — unexplored features or scenarios, edge cases, integrations, non-functional concerns,
+failure modes — then ask whether to dig into any of them or wrap up the questioning. Keep offering
+until the user chooses to stop; only then proceed to write/close. This checkpoint is mandatory, not a
+courtesy: the user decides when questioning ends, not the running-out of your list.
 
 ### ADRs with judgment
 Offer to record a decision as an ADR **only** when all three are true (see `ADR-FORMAT.md`): hard to
