@@ -18,6 +18,13 @@ destination — not an MVP. Stable; changes rarely.
 - **It is**: {essence in 2-3 sentences}
 - **It is not**: {explicit out-of-scope boundaries — by product decision, not by effort}
 
+## Constraints and accepted tradeoffs
+{The real limits the product is optimized within — budget, timeline, operational, compatibility,
+regulatory, risk — and the tradeoffs deliberately accepted because of them. Each is a *product
+decision*, stated out loud so it isn't mistaken for a silent cut. "We support English only at launch
+(localization is a later phase, not dropped)"; "single-region, no multi-region failover — accepted".
+Empty is fine for a project with no hard constraints; never use it to smuggle in scope cuts.}
+
 ## "Done and perfect" (global definition of done)
 {What the complete, robust, perfect product looks like. The bar everything is measured against.}
 
@@ -38,4 +45,8 @@ destination — not an MVP. Stable; changes rarely.
   ADRs, the ubiquitous language in `CONTEXT.md`.
 - **"It is not" is load-bearing.** Explicit product-scope boundaries (decided by product, never by
   effort) prevent drift.
+- **Constraints are boundaries, not cuts.** A tradeoff listed here is an approved product decision
+  (see the constitution's "Boundaries vs. cuts"). Deferred-but-in-scope work is *not* a constraint —
+  it stays in the ROADMAP as a phase. If you can't point to the product decision, it's a cut, not a
+  constraint.
 - **Stable.** If something big changes here, the ROADMAP almost certainly needs revisiting.

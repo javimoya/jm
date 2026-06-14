@@ -1,7 +1,9 @@
 ---
 description: Low-level discovery of ONE phase of a .jm/ project. Grills to produce the phase's SPEC (goal, vertical slice, testable acceptance criteria, deliverable and "How to see it", and a task plan sized so each task fits one fresh build session). Sharpens CONTEXT/ADRs inline and, if it discovers new things, mutates the ROADMAP. Use it at the start of a phase, before /jm:build.
-model: opus
+model: inherit
 effort: xhigh
+disable-model-invocation: true
+argument-hint: "[phase-id-or-slug]"
 ---
 
 # /jm:discover — Phase discovery
@@ -14,11 +16,13 @@ Shared protocols in `${CLAUDE_PLUGIN_ROOT}/jm-shared/` (`GRILLING.md`, `CONTEXT-
 `SPEC-FORMAT.md`).
 
 ## 1. Light orientation + constitution
-- Read `.jm/PRINCIPLES.md` (the bar: complete and perfect product, decompose ≠ drop).
-- Read `.jm/ROADMAP.md`, `.jm/CONTEXT.md`, `.jm/adr/`, and the SPEC/HANDOFF of
-  neighbouring phases (so you don't contradict what's already decided).
-- **Pick the phase**: the one the user names; otherwise the next `pending` one in dependency order.
-  Set its `status` → `discovering` in the ROADMAP.
+- Read `.jm/PRINCIPLES.md` (the bar: full-bar product, decompose ≠ drop, out-of-scope only as a
+  recorded *boundary*).
+- Read `.jm/ROADMAP.md`, `.jm/CONTEXT.md`, `.jm/adr/`, `.jm/RUNBOOK.md` (if present), and the
+  SPEC/HANDOFF of neighbouring phases (so you don't contradict what's already decided).
+- **Pick the phase**: the one named by the argument; otherwise the lowest-numbered `pending` whose
+  every dependency is `done` (`${CLAUDE_PLUGIN_ROOT}/jm-shared/ROADMAP-FORMAT.md`'s selection rule). Set its
+  `status` → `discovering` (it becomes the single active phase).
 - **Guard**: if the chosen phase is already `spec-ready`/`implementing`/`done`, it already has a SPEC
   (and maybe code). Don't silently re-discover and clobber it: say so and confirm with the user first,
   or route (`spec-ready` → `/jm:build`; `done` → the next phase).
@@ -27,8 +31,13 @@ Shared protocols in `${CLAUDE_PLUGIN_ROOT}/jm-shared/` (`GRILLING.md`, `CONTEXT-
 One question at a time, with your recommended answer, exploring the code when the answer is there.
 Nail down:
 - **The vertical slice**: this phase's end-to-end capability (not a horizontal layer).
-- **The testable acceptance criteria** (each one → an automatable test).
+- **The testable acceptance criteria** — each an `AC-N` with an **evidence type** (`automated`
+  preferred; `manual`/`visual`/`performance`/`security` only when truly not automatable) and the exact
+  **Verify** check that closes it.
 - **The concrete deliverable + "How to see it"** (the real command/steps the user will run).
+- **Pin the run/verify commands in `.jm/RUNBOOK.md`** as they firm up — the single full-suite command,
+  the deliverable run, focused tests, and any destructive paths (`${CLAUDE_PLUGIN_ROOT}/jm-shared/RUNBOOK-FORMAT.md`).
+  Env var **names** only, never secret values.
 - Sharpen terms in `CONTEXT.md` **inline**; offer ADRs only on the three criteria.
 
 As you grill, **write each answer straight into the SPEC** and keep the still-unresolved ones in the

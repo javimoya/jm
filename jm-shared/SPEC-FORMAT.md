@@ -15,8 +15,14 @@
 {The end-to-end capability being built. Not a horizontal layer.}
 
 ## Acceptance criteria (testable)
-1. {Given … when … then …}
-2. …
+{Each criterion carries a stable ID, the Given/When/Then, the kind of evidence that will close it, and
+the exact check that produces that evidence. IDs are stable for the life of the phase — audit findings
+and tests reference them.}
+- **AC-1** — {Given … when … then …}
+  - **Evidence**: {automated | manual | visual | performance | security}
+  - **Verify**: {the exact command/steps that produce that evidence — for `automated`, the test
+    name/path, runnable from the RUNBOOK's full suite}
+- **AC-2** — …
 
 ## Deliverable + "How to see it"
 - **Deliverable**: {the runnable/observable artifact left when the phase closes}
@@ -41,15 +47,18 @@ question, most important first. Emptied before the SPEC becomes `spec-ready`.}
 
 ## Rules
 
-- **Acceptance criteria are numbered, atomic, and automatable.** Each must be convertible to one
-  automated test; prefer Given/When/Then. If a criterion can't become a test, it isn't a criterion —
-  sharpen it until it can.
+- **Acceptance criteria have stable IDs, are atomic, and name their evidence.** Each `AC-N` is one
+  Given/When/Then with an **evidence type** (`automated` preferred; `manual` / `visual` /
+  `performance` / `security` allowed *only* when genuinely not automatable) and an exact, reproducible
+  **Verify** step. A criterion that can only be *inferred* — no runnable check — isn't a criterion;
+  sharpen it until it has one. IDs never change once assigned (audit findings cite them).
 - **The deliverable is runnable/observable, and "How to see it" is a real command or concrete
   steps** the user runs — never a vague description. No "How to see it" means the phase has no
   validatable deliverable, which is malformed.
 - **Tasks split implementation only.** No task has its own deliverable or tests (those are
   phase-level). Size each task so it comfortably fits one fresh `/jm:build` session; the user can
-  checkpoint at any time, so size generously, not optimistically.
+  checkpoint at any time, so size generously, not optimistically. An audit FAIL **appends** remediation
+  tasks named `Audit N / F-NN — …` (one per finding) to this plan; they follow the same rule.
 - **WHAT, not HOW.** The SPEC pins the contract and the acceptance, not a line-by-line
   implementation. Architectural choices belong in ADRs; domain terms in `CONTEXT.md` (link both under
   "Decisions and terms touched").

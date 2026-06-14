@@ -42,8 +42,13 @@ cp -R "$SHARED_SRC"/. "$SHARED_DEST"/
 
 # The commands reference ${CLAUDE_PLUGIN_ROOT}/jm-shared/ — a variable that only exists for
 # installed plugins. Rewrite it to the absolute path this manual install uses.
-find "$CMD_DEST" -name '*.md' -print0 \
-  | xargs -0 sed -i '' "s#\${CLAUDE_PLUGIN_ROOT}/jm-shared/#$SHARED_DEST/#g"
+# Portable in-place edit: write to a temp file and move it back (avoids `sed -i`, whose syntax
+# differs between BSD/macOS and GNU/Linux).
+find "$CMD_DEST" -name '*.md' -print0 | while IFS= read -r -d '' f; do
+  tmp="$f.tmp.$$"
+  sed "s#\${CLAUDE_PLUGIN_ROOT}/jm-shared/#$SHARED_DEST/#g" "$f" > "$tmp"
+  mv "$tmp" "$f"
+done
 
 echo "Done. Commands installed under the 'jm' namespace:"
 echo "  /jm:ideate   /jm:discover   /jm:build   /jm:audit   /jm:orient   /jm:wrap"

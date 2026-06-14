@@ -1,7 +1,8 @@
 ---
 description: Kicks off a large project from a vague idea, or extends one already in progress. Runs divergent brainstorming (proposes ideas, alternatives, and prior art you hadn't thought of) and then convergent grilling, and scaffolds the .jm/ directory (VISION, PRINCIPLES, ROADMAP of vertical-slice phases, CONTEXT). Use it when starting a new project orchestrated with this framework, to extend an in-progress one with new features or ideas (it re-plans the pending phases), or to re-vision an existing one. It is the first stage; the later ones are /jm:discover, /jm:build, /jm:audit.
-model: opus
+model: inherit
 effort: xhigh
+disable-model-invocation: true
 ---
 
 # /jm:ideate — Ideation and project kickoff
@@ -15,7 +16,8 @@ ideas, then re-plan only the pending phases, §6) — §0 detects which.
 Shared protocols live in `${CLAUDE_PLUGIN_ROOT}/jm-shared/` — read each file there when a step
 references it: `GRILLING.md`, `CONTEXT-FORMAT.md`, `ADR-FORMAT.md`,
 `CONSTITUTION.md`, `CLOSE-FORMAT.md`, and the `*-FORMAT.md` specs (`VISION-FORMAT.md`,
-`ROADMAP-FORMAT.md`, `SPEC-FORMAT.md`, `PROGRESS-FORMAT.md`, `HANDOFF-FORMAT.md`, `JOURNAL-FORMAT.md`).
+`ROADMAP-FORMAT.md`, `SPEC-FORMAT.md`, `PROGRESS-FORMAT.md`, `HANDOFF-FORMAT.md`, `RUNBOOK-FORMAT.md`,
+`JOURNAL-FORMAT.md`).
 
 ## 0. Detect mode (new vs extend)
 Check for `.jm/ROADMAP.md`:
@@ -26,9 +28,10 @@ Check for `.jm/ROADMAP.md`:
     - Copy `${CLAUDE_PLUGIN_ROOT}/jm-shared/CONSTITUTION.md` → `.jm/PRINCIPLES.md` (verbatim; it's the constitution).
     - Create `.jm/VISION.md` and `.jm/ROADMAP.md` following `${CLAUDE_PLUGIN_ROOT}/jm-shared/VISION-FORMAT.md`
       and `${CLAUDE_PLUGIN_ROOT}/jm-shared/ROADMAP-FORMAT.md` (copy their structure block; fill them below).
-    - `CONTEXT.md`, `adr/`, `phases/`, and `JOURNAL.md` are created **lazily**: `CONTEXT.md` when the
-      first term is resolved (format in `CONTEXT-FORMAT.md`), `adr/` with the first ADR, `phases/` in
-      `/jm:discover`, and `JOURNAL.md` at the first close ritual (`JOURNAL-FORMAT.md`).
+    - `CONTEXT.md`, `adr/`, `phases/`, `RUNBOOK.md`, and `JOURNAL.md` are created **lazily**:
+      `CONTEXT.md` when the first term is resolved (format in `CONTEXT-FORMAT.md`), `adr/` with the
+      first ADR, `phases/` in `/jm:discover`, `RUNBOOK.md` when the first run/test command is pinned
+      (format in `RUNBOOK-FORMAT.md`), and `JOURNAL.md` at the first close ritual (`JOURNAL-FORMAT.md`).
   - If `.jm/` already exists but has no phases, **read `.jm/PRINCIPLES.md`** and respect
     it: you're re-visioning, not starting from scratch.
 - **Extend (in-progress)** — `.jm/ROADMAP.md` exists with **≥1 phase row**. Skip scaffolding
@@ -36,7 +39,8 @@ Check for `.jm/ROADMAP.md`:
 
 ## 1. Read the constitution
 Read `.jm/PRINCIPLES.md` first. It governs everything below. Especially: **the final product is
-complete and perfect; effort is never a factor; nothing is dropped, it is decomposed.**
+complete to the agreed bar; effort is never a reason to cut; nothing is dropped silently — it is
+decomposed into a phase/task, or recorded as an explicit, approved boundary.**
 
 ## 2. Diverge, then converge (the `GRILLING.md` protocol)
 - **Diverge first**: faced with the vague idea, bring options, alternative approaches, prior art,
@@ -47,7 +51,8 @@ complete and perfect; effort is never a factor; nothing is dropped, it is decomp
   (format in `CONTEXT-FORMAT.md`). Offer ADRs only on the three criteria of `ADR-FORMAT.md`.
 
 ## 3. Write the VISION
-Fill `.jm/VISION.md`: problem/opportunity, for whom, what it is and isn't, **"done and perfect"
+Fill `.jm/VISION.md`: problem/opportunity, for whom, what it is and isn't, **constraints and accepted
+tradeoffs** (explicit, approved boundaries — never a place to smuggle cuts), **"done and perfect"
 (the real bar, not an MVP)**, non-negotiables, unknowns. The vision describes the complete
 destination.
 

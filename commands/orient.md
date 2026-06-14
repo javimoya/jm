@@ -1,7 +1,8 @@
 ---
-description: Reconstructs "where you are" in a project orchestrated with this framework by reading .jm/ (ROADMAP, latest HANDOFF/PROGRESS, active SPEC). Use it in a clean session when you don't remember where you left off. It does no work: it only orients you and tells you exactly which skill to launch next (/jm:ideate, /jm:discover, /jm:build, or /jm:audit).
-model: sonnet
+description: Reconstructs "where you are" in a project orchestrated with this framework by reading .jm/ (ROADMAP, latest HANDOFF/PROGRESS, active SPEC). Use it in a clean session when you don't remember where you left off. It does no work — it only orients you and tells you exactly which skill to launch next (/jm:ideate, /jm:discover, /jm:build, or /jm:audit).
+model: inherit
 effort: medium
+disable-model-invocation: true
 ---
 
 # /jm:orient — Where am I?
@@ -17,14 +18,16 @@ You work in the project directory (cwd); state lives in `<cwd>/.jm/`.
 - `.jm/PRINCIPLES.md` (skim, to recall the bar).
 - `.jm/JOURNAL.md` (if it exists) → the **last entry**, to recall what the previous session did
   and what it said comes next.
-- `.jm/ROADMAP.md` → the status table. Identify the **active phase**: the lowest-numbered one
-  whose `status` is not `done`.
-- Based on the active phase's `status`, read just enough:
+- `.jm/ROADMAP.md` → the status table. Identify the **active phase** per `ROADMAP-FORMAT.md`'s
+  selection rule: the single phase in a working state (`discovering`/`spec-ready`/`implementing`/
+  `auditing`); if none is active, the lowest-numbered `pending` whose every dependency is `done`.
+- Based on that phase's `status`, read just enough:
   - `pending`/`discovering` → its SPEC if it exists, including the SPEC's "Open questions (working)"
     list (the next unresolved discovery question); otherwise nothing more.
-  - `spec-ready`/`implementing` → `phases/NN/SPEC.md` and `phases/NN/PROGRESS.md` (which task is next).
-  - `auditing` → `phases/NN/SPEC.md` and `phases/NN/HANDOFF.md` (the draft to audit).
-  - `blocked` → the ROADMAP narrative (why).
+  - `spec-ready`/`implementing` → `phases/NN/SPEC.md` and `phases/NN/PROGRESS.md` (which task is next;
+    if a FAIL is open, the `Audit N / F-NN` remediation tasks).
+  - `auditing` → `phases/NN/SPEC.md` and `phases/NN/HANDOFF.md` (the draft + the latest audit attempt).
+  - `blocked` → the ROADMAP's `## Blocked phases` block (`From` / `Reason` / `Unblock when`).
 
 ## 3. Give the report (concise)
 In a few lines:
@@ -40,5 +43,6 @@ End with the exact action line, e.g.:
 - *"Phase 01's SPEC is ready for your approval; review it, then `/clear` + `/jm:build`."*
 - *"You're on task 2/3 of phase 01; `/clear` + `/jm:build` to continue."*
 - *"Phase 01 is implemented; `/clear` + `/jm:audit` to close it."*
+- *"Phase 03 is blocked (waiting on {unblock condition}); nothing to do until that holds."*
 
 **Do not** modify any file.

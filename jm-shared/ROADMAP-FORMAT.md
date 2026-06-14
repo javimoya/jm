@@ -1,7 +1,8 @@
 # ROADMAP.md format
 
-`.jm/ROADMAP.md` is the **canonical, machine-readable state file**. `/jm:orient` and the stage
-skills parse it to know what's next, so its structure is strict.
+`.jm/ROADMAP.md` is the **canonical, on-disk state** for the project — there is no separate state
+file. `/jm:orient` and the working commands parse its status table to know what's next, so its
+structure is strict: keep it exact.
 
 ## Structure
 
@@ -18,6 +19,15 @@ skills parse it to know what's next, so its structure is strict.
 ## Narrative
 {Why this order of phases. What story they tell together. What each one unblocks.}
 
+## Blocked phases
+{Present only while a phase's status is `blocked`. One block per blocked phase; delete the block the
+moment it is unblocked. This is the memory a flat `blocked` status would otherwise destroy.}
+
+### Phase NN — {slug}
+- **From**: {the status it held before blocking — restored verbatim on unblock}
+- **Reason**: {the concrete thing blocking it}
+- **Unblock when**: {an observable condition that, once true, clears the block}
+
 ## Structural changelog
 - {YYYY-MM-DD} — initial ROADMAP created by /jm:ideate.
 ```
@@ -27,9 +37,18 @@ skills parse it to know what's next, so its structure is strict.
 - **The status table is the single source of truth for dispatch.** Update it the moment anything
   changes; a stale table mis-routes the next clean session.
 - **Status vocabulary (a state machine).** Exactly: `pending` → `discovering` → `spec-ready` →
-  `implementing` → `auditing` → `done`. `blocked` may be entered from any state (note why in the
-  narrative). The only backward edge is `auditing` → `implementing` (an audit FAIL). Don't skip
-  `discovering`/`spec-ready`.
+  `implementing` → `auditing` → `done`. The only backward edge is `auditing` → `implementing` (an
+  audit FAIL). Don't skip `discovering`/`spec-ready`. `done` is terminal — never re-open it silently.
+- **Active phase & selection (deterministic).** At most **one** phase may be in a working state
+  (`discovering` / `spec-ready` / `implementing` / `auditing`) at a time — that is *the active phase*,
+  and a command with no argument operates on it. If none is active, the next phase to work is the
+  **lowest-numbered `pending` whose every `depends on` phase is `done`**; a `pending` phase with an
+  unfinished dependency is not yet selectable. A command given an explicit phase id/slug that is not
+  the active phase must **not** start parallel work — it reports the conflict and stops.
+- **`blocked` carries memory.** `blocked` may be entered from any state, but never as a flat label:
+  record `From` / `Reason` / `Unblock when` in the `## Blocked phases` section. Unblocking restores
+  the `From` status **exactly** and deletes the block. A reason with no observable unblock condition
+  is malformed (it creates a permanent, ambiguous block).
 - **Column contract.** Exactly these columns, in order: `#`, `slug`, `title`, `status`,
   `depends on`, `deliverable`. `#` is zero-padded and monotonic. `slug` is kebab-case, stable, and
   matches the `phases/NN-slug/` directory.

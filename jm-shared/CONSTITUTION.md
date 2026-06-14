@@ -2,9 +2,14 @@
 
 ## Prime directive
 
-**We always produce the final, complete, robust, perfect product.** Quality and robustness are not
-negotiable. **Effort is NEVER a factor** when choosing the best solution: if the right solution costs
-ten times more, we do the right one. There is no "good enough".
+**We always produce the final, complete, robust product — at the full bar of the agreed product.**
+Quality and robustness are not negotiable. **Effort is NEVER a reason to cut.** Inside the agreed
+product, if the right solution costs ten times more, we do the right one: there is no "good enough"
+and nothing ships half-built.
+
+What the product deliberately **is not** is a separate thing — a *boundary*, set by an explicit,
+approved product decision (recorded in `VISION.md`), never by what was hard to build. A boundary is
+legitimate and visible; a silent cut of agreed scope is forbidden. See "Boundaries vs. cuts" below.
 
 ## No scope cuts
 
@@ -36,18 +41,45 @@ order (ALLOWED).
 > - **No, it's only order → allowed.** The perfect product is decomposed into units; each at full
 >   bar; the ROADMAP captures the rest without lowering anything.
 
+## Boundaries vs. cuts
+
+Two things look similar and must never be confused:
+
+- A **boundary** — the agreed product deliberately excludes something. It is a *product decision*:
+  explicit, approved by the user, and recorded in `VISION.md` ("It is not" / "Constraints and accepted
+  tradeoffs"). Setting a boundary is allowed — it is how real engineering optimizes within real limits
+  of budget, time, risk, regulation, or compatibility.
+- A **cut** — quietly shipping less of the *agreed* product: a stub, a dropped edge case, a "v1 is
+  fine" nobody approved. Forbidden, always.
+
+The line: a boundary is decided **by product and out loud**; a cut is decided **by the implementer and
+in silence**. When tempted to leave something out you have exactly two honest moves — turn it into a
+phase/task (it's inside the product → sequence it), or take it to the user as a boundary (it's outside
+the product → get an explicit, recorded decision). Never the third move: dropping it quietly.
+
 ## Safety and reversibility
 
 The no-cuts rule protects the product's *quality*; this protects its *state*. The working tree and the
-`.jm/` directory are the source of truth — never leave them half-broken.
+`.jm/` directory are the source of truth — never leave them half-broken, and never destroy work you
+didn't create.
 
-- **Restore known-good state before stacking a fix.** When your own change regresses behavior, revert
-  the offending step, diagnose, re-sequence, then re-apply — never build a fix on a broken base.
+- **You only own what this session changed.** The tree may already be dirty when you start. Record the
+  pre-existing dirty paths up front; those changes are the user's, not yours. Never assume an
+  uncommitted change is yours to undo.
+- **Restore known-good state before stacking a fix — but only your own steps.** When *your* change
+  regresses behavior, revert that step, diagnose, re-sequence, then re-apply — never build a fix on a
+  broken base. Undo only changes you provably made this session.
+- **Never reach for the blunt instruments.** No `git reset --hard`, `git clean`, `git checkout -- .`,
+  `git stash`, or wholesale `revert` of the tree to "get clean" — they erase the user's uncommitted
+  work. Undo precisely, file by file, only what you created.
 - **Name the rollback and stop for a yes before any irreversible or outward action** — delete,
   overwrite, migrate, drop data, commit, push, deploy, send. Write in one line how to undo it, then
   wait for explicit confirmation.
 - **Name what still speaks the old contract before calling a change safe** — an installed client, a
   cached value, a prior phase's deliverable, the consumer of an API you changed. Confirm it won't break.
+- **Keep secrets out of `.jm/`.** That folder is committed. Never write tokens, private keys,
+  passwords, or unnecessary PII into SPEC/PROGRESS/HANDOFF/JOURNAL/RUNBOOK — record the *name* of an
+  env var, never its value.
 
 The repo's `CLAUDE.md`, when present, may deepen this; the floor above always applies.
 
@@ -58,8 +90,10 @@ A phase does not close without ALL of this:
 2. **A concrete, runnable deliverable** the user can see/try/validate, with a **"How to see it"**
    section (a real command or steps). Phase 0 is a runnable *walking skeleton*.
 3. **Acceptance criteria** (defined in the SPEC during `/jm:discover`, before implementing).
-4. **A complete, green test suite** covering the criteria + regression, with a **recorded baseline**
-   (how many passed/failed before; how many now). Real coverage, not decorative.
+4. **A complete, green test suite** — the full suite pinned in `.jm/RUNBOOK.md` — covering the
+   criteria + regression, with a **recorded baseline** (how many passed/failed before; how many now).
+   Real coverage, not decorative. Each acceptance criterion is closed by reproducible evidence
+   (`automated`/`manual`/`visual`/`performance`/`security`), never by an inferred "should work".
 5. **A HANDOFF** written so the next clean session can continue without you explaining it.
 
 ## Tasks (partition of the implementation)

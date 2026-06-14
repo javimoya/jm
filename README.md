@@ -6,7 +6,7 @@
 
 It is opinionated on purpose. Its prime directive:
 
-> **The final product is complete and perfect. Nothing is ever silently dropped — it is decomposed into more work.**
+> **The final product is complete and robust to the agreed bar. Nothing is ever silently dropped — it's decomposed into more work, or recorded as an explicit, approved boundary.**
 
 Once installed, the commands are namespaced under `jm`: `/jm:ideate`, `/jm:discover`, `/jm:build`, `/jm:audit`, `/jm:orient`, `/jm:wrap`.
 
@@ -96,15 +96,16 @@ Everything the workflow knows lives in a `.jm/` folder at the root of your proje
 .jm/
 ├── PRINCIPLES.md      # the constitution (the quality bar) — copied at kickoff
 ├── VISION.md          # the complete destination: what "done and perfect" means
-├── ROADMAP.md         # the phases, their status and dependencies (the dispatch table)
+├── ROADMAP.md         # the canonical state: phases, status, dependencies, blocked memory
+├── RUNBOOK.md         # the pinned run/verify commands (full suite, deliverable, destructive paths)
 ├── CONTEXT.md         # a glossary of your project's domain terms
 ├── JOURNAL.md         # append-only history: one entry per work session
 ├── adr/               # Architecture Decision Records (the "why" behind big calls)
 └── phases/
     └── NN-slug/
-        ├── SPEC.md      # the phase's testable contract
-        ├── PROGRESS.md  # build checkpoint (which task is next, where to resume)
-        └── HANDOFF.md   # what was built + how to verify + audit verdict
+        ├── SPEC.md      # the phase's testable contract (criteria with typed evidence)
+        ├── PROGRESS.md  # build checkpoint: provenance, which task is next, where to resume
+        └── HANDOFF.md   # what was built + how to verify + append-only audit history
 ```
 
 Commit this folder alongside your code. Anyone — you tomorrow, a teammate, a fresh agent — can `/jm:orient` and continue.
@@ -119,8 +120,8 @@ Each phase moves through a strict state machine, tracked in `ROADMAP.md`:
 pending → discovering → spec-ready → implementing → auditing → done
 ```
 
-- `blocked` can be entered from any state (with a reason).
-- The only step backward is `auditing → implementing` — an audit **FAIL**.
+- `blocked` can be entered from any state — and **remembers** the state it came from, the reason, and the condition to unblock (unblocking restores the prior state exactly).
+- The only step backward is `auditing → implementing` — an audit **FAIL**, which turns each finding into a concrete, trackable remediation task.
 
 This is what lets the skills self-route: run `/jm:build` on a phase that isn't ready and it stops and points you to `/jm:discover`.
 
@@ -130,8 +131,9 @@ This is what lets the skills self-route: run `/jm:build` on a phase that isn't r
 
 Enforced by `PRINCIPLES.md` (the constitution) and the skills:
 
-- **Decompose, don't drop.** If something is "for later", it becomes a new phase or task — never a silent cut. The roadmap may grow; the product's quality bar never drops.
-- **Verify before you claim.** Record a test baseline before you start; run the real deliverable before calling it done; an independent audit confirms it.
+- **Decompose, don't drop — or set an explicit boundary.** If something is "for later" it becomes a new phase or task; if it's genuinely out of scope it becomes a recorded, approved boundary in the VISION. Never a silent cut.
+- **Verify before you claim.** A per-project `RUNBOOK.md` pins the exact full-suite command so build and audit measure the same thing; record a baseline before you start, run the real deliverable before calling it done, and an independent fresh-eyes audit confirms each criterion — keeping an append-only history of every attempt.
+- **Own only what you changed.** Builds record their base commit and the tree's pre-existing dirty paths, so your own uncommitted work is never reverted or blamed on a phase.
 - **Clean context per step.** Each stage runs in a fresh session and hands off through `.jm/`, so quality never degrades inside a bloated session.
 - **Resumable everywhere.** Long discovery or long builds can be cut mid-way and continued — open questions and "where to resume" are written down. Hit **`/jm:wrap`** to checkpoint on demand the moment context starts to degrade.
 
@@ -170,7 +172,7 @@ Safe to re-run: any existing manual install is backed up to `*.bak.<timestamp>` 
 ### Requirements
 
 - [Claude Code](https://claude.com/claude-code) — CLI, desktop app, or IDE extension.
-- The commands request Opus with high effort by default (`model:` / `effort:` in each `commands/*.md`); edit those fields to taste.
+- The commands **inherit your session's model** (`model: inherit`) and never auto-invoke (`disable-model-invocation: true`); tune `model:` / `effort:` in any `commands/*.md` to taste.
 
 ---
 
@@ -192,6 +194,10 @@ Safe to re-run: any existing manual install is backed up to `*.bak.<timestamp>` 
 **Why clean sessions / `/clear` between steps?** Long sessions degrade. Each step is sized to fit one fresh session, and the `.jm/` files carry state across, so you always work with a sharp context.
 
 ---
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for what changed in each version.
 
 ## License
 

@@ -8,12 +8,13 @@ ROADMAP, the JOURNAL, and the breadcrumb from drifting apart between clean sessi
 ## The ritual (in order)
 
 1. **Persist the skill's own artifacts.** Whatever this skill owns is written and consistent on disk:
-   the ROADMAP status table, and (as applicable) the SPEC, `PROGRESS.md`, or `HANDOFF.md`. A cut
-   session persists its partial state too (e.g. discovery's "Open questions", build's "where to
-   resume").
+   the ROADMAP status table, and (as applicable) the SPEC, `PROGRESS.md`, `HANDOFF.md`, or
+   `RUNBOOK.md`. A cut session persists its partial state too (e.g. discovery's "Open questions",
+   build's "where to resume").
 2. **Update the ROADMAP.** The `status` of the active phase reflects reality, and any structural
    change (add / split / reorder / block) has its dated line in the `## Structural changelog`
-   (`ROADMAP-FORMAT.md`).
+   (`ROADMAP-FORMAT.md`). A `block` also records `From` / `Reason` / `Unblock when` in the
+   `## Blocked phases` section; unblocking restores `From` exactly and deletes the block.
 3. **Append a JOURNAL entry.** Add one entry to `.jm/JOURNAL.md` per `JOURNAL-FORMAT.md`
    (create the file on the first close). Append-only — never edit a prior entry.
 4. **Emit the breadcrumb.** End with the skill's one-line breadcrumb: *where you are in the big
