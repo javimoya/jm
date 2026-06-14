@@ -57,14 +57,12 @@ def main() -> int:
         if name in WANT_ARG_HINT and not fm.get("argument-hint"):
             errors.append(f"{name}: expected an argument-hint")
 
-    # Only the audit runs in a forked context; nothing else should.
-    for path in COMMANDS:
-        fm = frontmatter(path)
+        # Only the audit runs in a forked context; nothing else should.
         has_fork = fm.get("context") == "fork"
-        if path.name == "audit.md" and not has_fork:
+        if name == "audit.md" and not has_fork:
             errors.append("audit.md: must set context: fork")
-        if path.name != "audit.md" and has_fork:
-            errors.append(f"{path.name}: only audit.md should set context: fork")
+        if name != "audit.md" and has_fork:
+            errors.append(f"{name}: only audit.md should set context: fork")
 
     if errors:
         print("Command frontmatter check FAILED:", file=sys.stderr)

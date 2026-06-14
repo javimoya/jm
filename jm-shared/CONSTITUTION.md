@@ -38,7 +38,7 @@ order (ALLOWED).
 > **"Will the end state of the whole project be any less complete, robust, or clean if I do it this
 > way?"**
 > - **Yes → forbidden.** It's a cut. Do it right now, or turn it into a phase/task at full bar.
-> - **No, it's only order → allowed.** The perfect product is decomposed into units; each at full
+> - **No, it's only order → allowed.** The agreed product is decomposed into units; each at full
 >   bar; the ROADMAP captures the rest without lowering anything.
 
 ## Boundaries vs. cuts

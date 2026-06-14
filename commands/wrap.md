@@ -28,9 +28,9 @@ were doing). The `status` tells you which command was running and how to cut:
 Finish only the minimum needed to leave a coherent, **known-good** state — never a half-broken tree
 (`.jm/PRINCIPLES.md` → "Safety and reversibility"). If one of **your own** in-flight changes can't be
 completed safely, **revert just that change** rather than leave it broken; the resume note will say to
-redo it. **Never** revert the pre-existing dirty paths recorded in PROGRESS, and never use
-`git reset`/`clean`/`checkout -- .` to "get clean" — that destroys the user's work. Do not begin the
-next task, question, or check.
+redo it. **Never** revert the pre-existing dirty paths recorded in PROGRESS, and never reach for the
+blunt instruments to "get clean" (PRINCIPLES → "Safety and reversibility") — that destroys the user's
+work. Do not begin the next task, question, or check.
 
 ## 2. Persist the partial state (delegate — don't re-invent)
 Persist exactly what the active command owns, following that command's own checkpoint rule:

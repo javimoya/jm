@@ -89,14 +89,10 @@ Reached from §0 when a ROADMAP with phases already exists. You're **re-planning
 - **Update the VISION if scope grows:** when the new ideas widen what the product is/does, edit
   `.jm/VISION.md` so it still describes the **complete destination**.
 - **Translate into phases — only `pending` is mutable:** turn the new work into **new phases** and/or
-  fold it into existing **`pending`** phases. **Never touch a phase whose `status` ≠ `pending`**
-  (`discovering`/`spec-ready`/`implementing`/`auditing`/`done`/`blocked`): those carry history or an
-  on-disk `phases/NN-slug/` directory. Decompose, don't drop — every addition becomes a phase.
-- **Re-evaluate order (pending only):** `pending` phases have **no `phases/NN-slug/` directory yet**
-  (created lazily in `/jm:discover`), so their `#` can be safely renumbered. Reorder/renumber only the
-  `pending` set; keep `#` zero-padded and monotonic and never collide with a frozen phase's `#`. If a
-  clean renumber isn't possible, **append** the new phases instead. Never change a frozen phase's
-  `slug` or `#`.
+  fold it into existing **`pending`** phases, and reorder the `pending` set, following
+  `ROADMAP-FORMAT.md`'s **Phase mutability** rule (frozen phases are untouchable; renumber/reorder
+  within `pending`, else append). Decompose, don't drop — every addition becomes a phase, never a
+  change to a frozen phase's `#`/`slug`.
 - **Granularity of the new work:** apply §5's question to just the **new** phases (Lean / Balanced /
   Thorough → ~N phases, Balanced recommended). Skip it if only one phase emerges.
 - **Changelog discipline:** add one dated line to the ROADMAP's `## Structural changelog` per

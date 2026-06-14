@@ -19,9 +19,9 @@ Shared protocols in `${CLAUDE_PLUGIN_ROOT}/jm-shared/` (`GRILLING.md`, `CONTEXT-
   recorded *boundary*).
 - Read `.jm/ROADMAP.md`, `.jm/CONTEXT.md`, `.jm/adr/`, `.jm/RUNBOOK.md` (if present), and the
   SPEC/HANDOFF of neighbouring phases (so you don't contradict what's already decided).
-- **Pick the phase**: the one named by the argument; otherwise the lowest-numbered `pending` whose
-  every dependency is `done` (`${CLAUDE_PLUGIN_ROOT}/jm-shared/ROADMAP-FORMAT.md`'s selection rule). Set its
-  `status` → `discovering` (it becomes the single active phase).
+- **Pick the phase** per `${CLAUDE_PLUGIN_ROOT}/jm-shared/ROADMAP-FORMAT.md`'s **Active phase & selection** rule
+  (the named argument, else the lowest ready `pending`; an explicit phase that isn't the active one →
+  **stop** and report the conflict). Set its `status` → `discovering` (it becomes the single active phase).
 - **Guard**: if the chosen phase is already `spec-ready`/`implementing`/`done`, it already has a SPEC
   (and maybe code). Don't silently re-discover and clobber it: say so and confirm with the user first,
   or route (`spec-ready` → `/jm:build`; `done` → the next phase).
@@ -54,10 +54,9 @@ generously rather than optimistically.
 If discovery reveals work that doesn't belong in this phase: **don't cut it**. Create it as a **new
 phase** (or reorder/split phases) in the ROADMAP and note it in the changelog. If it's an
 architectural pivot, add an ADR as well.
-- **Only `pending` phases are mutable** (same rule as `ideate.md` §6). Never change the `#` or `slug`
-  of a frozen phase (`discovering`/`spec-ready`/`implementing`/`auditing`/`done`/`blocked`) — it has an
-  on-disk `phases/NN-slug/` directory and history. Reorder/renumber within the `pending` set only; if a
-  clean renumber isn't possible, **append** the new phase instead. Never delete a phase (that's a cut).
+- **Only `pending` phases are mutable** — follow `${CLAUDE_PLUGIN_ROOT}/jm-shared/ROADMAP-FORMAT.md`'s **Phase
+  mutability** rule: never change a frozen phase's `#`/`slug`, renumber/reorder within `pending`,
+  append if no clean renumber, never delete a phase.
 
 ## 5. Write the SPEC
 Write `.jm/phases/NN-slug/SPEC.md` following `${CLAUDE_PLUGIN_ROOT}/jm-shared/SPEC-FORMAT.md`. Only when the

@@ -19,7 +19,7 @@ You work in the project directory (cwd); state lives in `<cwd>/.jm/`.
 - `.jm/JOURNAL.md` (if it exists) → the **last entry**, to recall what the previous session did
   and what it said comes next.
 - `.jm/ROADMAP.md` → the status table. Identify the **active phase** per `ROADMAP-FORMAT.md`'s
-  selection rule: the single phase in a working state (`discovering`/`spec-ready`/`implementing`/
+  **Active phase & selection** rule: the single phase in a working state (`discovering`/`spec-ready`/`implementing`/
   `auditing`); if none is active, the lowest-numbered `pending` whose every dependency is `done`.
 - Based on that phase's `status`, read just enough:
   - `pending`/`discovering` → its SPEC if it exists, including the SPEC's "Open questions (working)"

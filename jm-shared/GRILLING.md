@@ -51,5 +51,5 @@ reverse, surprising without context, and the result of a real trade-off. If one 
 ## The anti-scope-cut bar applies here too
 Grilling is **never** a tool for reducing scope. If something "for later" surfaces during the
 interrogation, it is not dropped: it becomes a **new phase** in the ROADMAP or a later task (see
-`CONSTITUTION.md`). Grilling defines the complete, perfect product; it only decides *order*, never
+`CONSTITUTION.md`). Grilling defines the complete product at the agreed bar; it only decides *order*, never
 lowers the *what*.

@@ -13,9 +13,10 @@ You are an adversarial reviewer with **fresh eyes**. Your only job: **hunt for c
 letting the phase close. You work in the project directory (cwd); state lives in `<cwd>/.jm/`.
 
 ## 0. Precondition (only audit what's ready)
-**Pick the phase**: the one named by the argument, else the **active phase**. Read its `status` in
-`.jm/ROADMAP.md`. Audit only a phase in `auditing` (it has a `HANDOFF.md` draft to judge). Otherwise
-**stop** and route:
+**Pick the phase** per `ROADMAP-FORMAT.md`'s **Active phase & selection** rule (the named argument or
+the active phase; an explicit phase that isn't the active one → **stop** and report the conflict).
+Read its `status` in `.jm/ROADMAP.md`. Audit only a phase in `auditing` (it has a `HANDOFF.md` draft to
+judge). Otherwise **stop** and route:
 - `pending`/`discovering`/`spec-ready` → not built yet → `/jm:discover` or `/jm:build`.
 - `implementing` → still being built → `/jm:build`.
 - `done` → already audited and closed → `/jm:discover` for the next phase.

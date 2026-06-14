@@ -11,10 +11,9 @@ You implement a phase's SPEC **to the highest bar**. You work in the project dir
 lives in `<cwd>/.jm/`. Protocols and format specs in `${CLAUDE_PLUGIN_ROOT}/jm-shared/`.
 
 ## 0. Precondition (don't build the wrong thing)
-**Pick the phase**: the one named by the argument, else the **active phase** (the single one in a
-working state), else the lowest `pending` whose every dependency is `done` (`ROADMAP-FORMAT.md`'s
-selection rule). If the argument names a phase that isn't the active one, **stop** and report the
-conflict — don't start parallel work. Then read its `status` in `.jm/ROADMAP.md`:
+**Pick the phase** per `ROADMAP-FORMAT.md`'s **Active phase & selection** rule (the named argument,
+else the active phase, else the lowest ready `pending`; an explicit phase that isn't the active one →
+**stop** and report the conflict, don't start parallel work). Then read its `status` in `.jm/ROADMAP.md`:
 - `pending`/`discovering` → there's no approved SPEC yet. **Stop** and send the user to `/jm:discover`
   (the SPEC must exist before building). Don't write code.
 - `spec-ready` → proceed; §2's start gate is the human approval.
@@ -63,16 +62,16 @@ never mistaken for "not started", and the user's own changes are never blamed on
   constitution's test. Two honest moves only — **create a later task or a new phase** (it's inside the
   product → sequence it; record it in PROGRESS/ROADMAP), or **take it to the user as a boundary** (it's
   outside the product → get an explicit, recorded decision). Never a silent drop. **Append** any new
-  phase — leave existing phases' `#`/`slug` untouched (frozen phases have on-disk `phases/NN-slug/`
-  dirs and history).
+  phase per `ROADMAP-FORMAT.md`'s **Phase mutability** rule (never disturb a frozen phase's `#`/`slug`).
 - **Record decisions as ADRs.** When you make an architectural or surprising implementation decision
   that meets the three criteria of `${CLAUDE_PLUGIN_ROOT}/jm-shared/ADR-FORMAT.md`, write it to `.jm/adr/` and
   reference it in the HANDOFF. The "why" must survive in the docs, not just in your head.
 - **Safety and reversibility** (PRINCIPLES' "Safety and reversibility"): before any irreversible or
   outward step — a migration, dropping data, a deploy, anything you can't take back — name the rollback
   in one line and get a go/no-go first. If a change **you** made regressed behavior, restore the
-  known-good state of **your own** step and re-sequence; don't patch over a broken base. Never use
-  `git reset`/`clean`/`checkout -- .` to "get clean" — that destroys the user's pre-existing changes.
+  known-good state of **your own** step and re-sequence; don't patch over a broken base. Never reach for
+  the blunt instruments to "get clean" (PRINCIPLES → "Safety and reversibility") — they destroy the
+  user's pre-existing changes.
 
 ## 5. Checkpoint & task splitting
 You **cannot reliably measure your own context usage**, so don't try to gate on a percentage. Two

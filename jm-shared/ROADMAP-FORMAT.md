@@ -57,5 +57,11 @@ moment it is unblocked. This is the memory a flat `blocked` status would otherwi
   skeleton).
 - **Decompose, don't drop.** Deferred work appears here as a new phase — it never vanishes. Inserting
   or splitting phases is allowed; explain it in the changelog.
+- **Phase mutability (only `pending` is malleable).** A `pending` phase has no on-disk
+  `phases/NN-slug/` directory yet, so it may be renumbered, reordered, split, or folded into. Any phase
+  in a working / `done` / `blocked` state is **frozen** — it has a `phases/NN-slug/` directory and
+  history; never change its `#` or `slug`. Renumber/reorder within the `pending` set only (keep `#`
+  zero-padded and monotonic, never colliding with a frozen `#`); if a clean renumber isn't possible,
+  **append** instead. Never delete a phase (that's a cut).
 - **Changelog discipline.** Every structural change (add / split / reorder / block) gets one dated
   line. The changelog is how a future session reconstructs how the plan evolved.
