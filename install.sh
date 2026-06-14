@@ -46,4 +46,4 @@ find "$CMD_DEST" -name '*.md' -print0 \
   | xargs -0 sed -i '' "s#\${CLAUDE_PLUGIN_ROOT}/jm-shared/#$SHARED_DEST/#g"
 
 echo "Done. Commands installed under the 'jm' namespace:"
-echo "  /jm:ideate   /jm:discover   /jm:build   /jm:audit   /jm:orient"
+echo "  /jm:ideate   /jm:discover   /jm:build   /jm:audit   /jm:orient   /jm:wrap"

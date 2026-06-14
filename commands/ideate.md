@@ -98,9 +98,16 @@ Reached from §0 when a ROADMAP with phases already exists. You're **re-planning
 - **Changelog discipline:** add one dated line to the ROADMAP's `## Structural changelog` per
   structural change (add / split / reorder), as required by `ROADMAP-FORMAT.md`.
 
-## Close — ritual + breadcrumb
-Run the close ritual (`${CLAUDE_PLUGIN_ROOT}/jm-shared/CLOSE-FORMAT.md`): make sure VISION/ROADMAP are written and
-consistent, append a `JOURNAL.md` entry (create it the first time), then emit the one-line breadcrumb:
+## Close — present, then ritual + breadcrumb
+**1. Present the roadmap to the user.** Before persisting anything, walk them through the final plan so
+the phases aren't a black box: list **every phase in order** — `NN-slug` + its one-line deliverable —
+plus the narrative for *why this order* (the slice each delivers, the key dependencies). In **extend**
+mode, make explicit which phases are **new** vs **modified** (`pending` only). Invite any last
+adjustment before closing.
+
+**2. Run the close ritual** (`${CLAUDE_PLUGIN_ROOT}/jm-shared/CLOSE-FORMAT.md`): make sure VISION/ROADMAP are
+written and consistent, append a `JOURNAL.md` entry (create it the first time), then emit the one-line
+breadcrumb:
 - **New project:** *vision and roadmap created; you're at kickoff; next: `/clear` and then
   `/jm:discover` to discover phase 01 (`{slug}`)*.
 - **Extended:** *roadmap extended (+{X} new / ~{Y} modified pending phases, reordered); next:

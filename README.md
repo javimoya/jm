@@ -2,13 +2,13 @@
 
 **Build big things with [Claude Code](https://claude.com/claude-code) — complete, robust, and phase by phase. No scope cuts, no half-finished work, no lost context.**
 
-`jm` is a small Claude Code plugin: five *slash commands* that turn a vague idea into a finished, robust product. It works by breaking the work into **phases**, building each one to a high bar in its own clean session, and keeping every bit of project state on disk — so any fresh session can pick up exactly where the last one stopped.
+`jm` is a small Claude Code plugin: a handful of *slash commands* that turn a vague idea into a finished, robust product. It works by breaking the work into **phases**, building each one to a high bar in its own clean session, and keeping every bit of project state on disk — so any fresh session can pick up exactly where the last one stopped.
 
 It is opinionated on purpose. Its prime directive:
 
 > **The final product is complete and perfect. Nothing is ever silently dropped — it is decomposed into more work.**
 
-Once installed, the commands are namespaced under `jm`: `/jm:ideate`, `/jm:discover`, `/jm:build`, `/jm:audit`, `/jm:orient`.
+Once installed, the commands are namespaced under `jm`: `/jm:ideate`, `/jm:discover`, `/jm:build`, `/jm:audit`, `/jm:orient`, `/jm:wrap`.
 
 ---
 
@@ -84,6 +84,7 @@ You move through a project **one phase at a time**. A phase is a vertical slice 
 | **`/jm:build`** | Implements the phase's SPEC to the highest bar, one task at a time, with tests. | After the SPEC is approved. |
 | **`/jm:audit`** | Independent fresh-eyes audit. PASS closes the phase; FAIL sends it back. | After a phase is built. |
 | **`/jm:orient`** | Read-only GPS. Reconstructs where you are and what's next. Changes nothing. | Any time you're lost or returning. |
+| **`/jm:wrap`** | On-demand checkpoint. Cuts the working session you're in the middle of — carving in-progress work into a follow-up task (or saving open questions / partial findings) — so nothing is lost. | Mid-build/discover, when context degrades or you want to pause. |
 
 ---
 
@@ -132,7 +133,7 @@ Enforced by `PRINCIPLES.md` (the constitution) and the skills:
 - **Decompose, don't drop.** If something is "for later", it becomes a new phase or task — never a silent cut. The roadmap may grow; the product's quality bar never drops.
 - **Verify before you claim.** Record a test baseline before you start; run the real deliverable before calling it done; an independent audit confirms it.
 - **Clean context per step.** Each stage runs in a fresh session and hands off through `.jm/`, so quality never degrades inside a bloated session.
-- **Resumable everywhere.** Long discovery or long builds can be cut mid-way and continued — open questions and "where to resume" are written down.
+- **Resumable everywhere.** Long discovery or long builds can be cut mid-way and continued — open questions and "where to resume" are written down. Hit **`/jm:wrap`** to checkpoint on demand the moment context starts to degrade.
 
 ---
 
@@ -186,7 +187,7 @@ Safe to re-run: any existing manual install is backed up to `*.bak.<timestamp>` 
 
 **Does it work for any language/stack?** Yes — it's stack-agnostic. The skills talk about specs, tests, and deliverables; you bring the language.
 
-**Do I have to use all five?** The four working skills form the loop (ideate → discover → build → audit). `/jm:orient` is optional but handy.
+**Do I have to use all of them?** The four working skills form the loop (ideate → discover → build → audit). `/jm:orient` (GPS) and `/jm:wrap` (on-demand checkpoint) are optional but handy.
 
 **Why clean sessions / `/clear` between steps?** Long sessions degrade. Each step is sized to fit one fresh session, and the `.jm/` files carry state across, so you always work with a sharp context.
 

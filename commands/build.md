@@ -36,10 +36,15 @@ Without this you can't claim "I broke nothing".
   **Write tests** that map to the acceptance criteria.
 - **Anti-cut reframe**: if you feel tempted to defer/simplify/leave a TODO or stub, STOP and apply the
   constitution's test. The move is never to drop it: it's to **create a later task or a new phase**
-  (record it in PROGRESS/ROADMAP). Never a silent drop.
+  (record it in PROGRESS/ROADMAP). Never a silent drop. **Append** any new phase — leave existing
+  phases' `#`/`slug` untouched (frozen phases have on-disk `phases/NN-slug/` dirs and history).
 - **Record decisions as ADRs.** When you make an architectural or surprising implementation decision
   that meets the three criteria of `${CLAUDE_PLUGIN_ROOT}/jm-shared/ADR-FORMAT.md`, write it to `.jm/adr/` and
   reference it in the HANDOFF. The "why" must survive in the docs, not just in your head.
+- **Safety and reversibility** (PRINCIPLES' "Safety and reversibility"): before any irreversible or
+  outward step — a migration, dropping data, a deploy, anything you can't take back — name the rollback
+  in one line and get a go/no-go first. If a change you made regressed behavior, restore the known-good
+  state and re-sequence; don't patch over a broken base.
 
 ## 5. Checkpoint & task splitting
 You **cannot reliably measure your own context usage**, so don't try to gate on a percentage. Two
@@ -53,7 +58,8 @@ To checkpoint:
 - Update `PROGRESS.md` (create it following `${CLAUDE_PLUGIN_ROOT}/jm-shared/PROGRESS-FORMAT.md` the first time):
   task, done / remaining / **where to resume** (file:line, next concrete step) / files touched.
 - If work remains in the current task, **carve the remainder into a new follow-up task** in the plan.
-- Leave the tree in a clean, compiling state.
+- Leave the tree in a clean, compiling state — known-good, never half-broken (PRINCIPLES' "Safety and
+  reversibility"). A reverted experiment beats a checkpoint the next session can't build on.
 - Set `status` coherently, then stop and tell the user to `/clear` and `/jm:build` the next task.
 
 Never push a degrading session. Cutting early and handing off cleanly always wins.
@@ -65,6 +71,9 @@ When the phase is complete:
 - Write the `HANDOFF.md` draft (following `${CLAUDE_PLUGIN_ROOT}/jm-shared/HANDOFF-FORMAT.md`): what was built,
   decisions, how to verify + real result, test status baseline→final, open threads. Set
   `status` → `auditing`.
+- **Mark claims confirmed vs inferred** in the HANDOFF: every load-bearing statement is either
+  *confirmed* (name the evidence — the command you ran, file:line, the observed output) or *inferred*
+  (say so, and what would confirm it). "How to verify" cites a real observed result, never "it should work".
 - **Self-accounting gate**: before declaring it done, explicitly list everything you
   simplified/deferred/left pending and turn it into a phase/task or justify it with the test.
 

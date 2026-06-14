@@ -25,7 +25,9 @@ intentions.
 ## 1. Verify it meets the contract
 - **Run the full suite** yourself. It must be green; check the delta against the HANDOFF's baseline.
 - **Run the SPEC's "How to see it".** Observe the real result (not "it should work").
-- Walk the **acceptance criteria** one by one and confirm each genuinely holds.
+- Walk the **acceptance criteria** one by one and confirm each genuinely holds. Mark each as
+  **confirmed** (name the evidence that proves it — the test, the command output, file:line) or
+  **inferred**; treat anything you can only infer as not yet met.
 
 ## 2. Adversarial cut hunt
 Think hard before the verdict (**ultrathink**): subtle cuts hide inside plausible-looking code.
@@ -39,10 +41,13 @@ Actively look for (grep + reading):
 - **A surprising/architectural decision in the code with no matching ADR** in `.jm/adr/` — the
   "why" must be recoverable, so a missing ADR for such a decision is a finding.
 - **A domain term used inconsistently with `.jm/CONTEXT.md`** — a finding too.
+- **A fix stacked on a still-broken base, or an irreversible/outward action taken with no rollback
+  named** (against PRINCIPLES' "Safety and reversibility") — a finding.
 
 ## 3. Verdict
-- **PASS** (zero cuts, contract met): fill the "Audit verdict" section of `HANDOFF.md` (PASS +
-  "none") and set the phase `status` → `done` in the ROADMAP.
+- **PASS** (zero cuts, contract met, **every criterion confirmed — not merely inferred**): fill the
+  "Audit verdict" section of `HANDOFF.md` (PASS + "none") and set the phase `status` → `done` in the
+  ROADMAP.
 - **FAIL** (any cut/shortfall): write the concrete, actionable findings into the HANDOFF and set
   `status` → `implementing`. The phase **does not close**.
 

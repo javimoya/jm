@@ -46,6 +46,10 @@ generously rather than optimistically.
 If discovery reveals work that doesn't belong in this phase: **don't cut it**. Create it as a **new
 phase** (or reorder/split phases) in the ROADMAP and note it in the changelog. If it's an
 architectural pivot, add an ADR as well.
+- **Only `pending` phases are mutable** (same rule as `ideate.md` §6). Never change the `#` or `slug`
+  of a frozen phase (`discovering`/`spec-ready`/`implementing`/`auditing`/`done`/`blocked`) — it has an
+  on-disk `phases/NN-slug/` directory and history. Reorder/renumber within the `pending` set only; if a
+  clean renumber isn't possible, **append** the new phase instead. Never delete a phase (that's a cut).
 
 ## 5. Write the SPEC
 Write `.jm/phases/NN-slug/SPEC.md` following `${CLAUDE_PLUGIN_ROOT}/jm-shared/SPEC-FORMAT.md`. Only when the

@@ -1,9 +1,5 @@
 # PRINCIPLES.md — The project constitution
 
-> Read at the start of **every** working session (`/jm:ideate`, `/jm:discover`, `/jm:build`, `/jm:audit`). It is
-> non-negotiable. It complements the repo's `CLAUDE.md` (baseline before claiming, verify before
-> declaring, stay in scope) — it does not duplicate it.
-
 ## Prime directive
 
 **We always produce the final, complete, robust, perfect product.** Quality and robustness are not
@@ -39,6 +35,21 @@ order (ALLOWED).
 > - **Yes → forbidden.** It's a cut. Do it right now, or turn it into a phase/task at full bar.
 > - **No, it's only order → allowed.** The perfect product is decomposed into units; each at full
 >   bar; the ROADMAP captures the rest without lowering anything.
+
+## Safety and reversibility
+
+The no-cuts rule protects the product's *quality*; this protects its *state*. The working tree and the
+`.jm/` directory are the source of truth — never leave them half-broken.
+
+- **Restore known-good state before stacking a fix.** When your own change regresses behavior, revert
+  the offending step, diagnose, re-sequence, then re-apply — never build a fix on a broken base.
+- **Name the rollback and stop for a yes before any irreversible or outward action** — delete,
+  overwrite, migrate, drop data, commit, push, deploy, send. Write in one line how to undo it, then
+  wait for explicit confirmation.
+- **Name what still speaks the old contract before calling a change safe** — an installed client, a
+  cached value, a prior phase's deliverable, the consumer of an API you changed. Confirm it won't break.
+
+The repo's `CLAUDE.md`, when present, may deepen this; the floor above always applies.
 
 ## Each phase's contract
 
