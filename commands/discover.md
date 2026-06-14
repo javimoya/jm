@@ -51,6 +51,14 @@ SPEC's **"Open questions (working)"** list (most important first) — that list 
 The phase stays `discovering` while it's non-empty, so a long discovery can be cut and continued in a
 fresh session.
 
+**A "defer to a later phase" answer is a seed, not a boundary.** When grilling resolves to push a known
+piece of this phase's scope to a later phase (sequencing, not a cut), record it **the moment you decide**
+as a seed in `.jm/NOTES.md` targeting that phase's `slug` — the same path as `/jm:capture`
+(`${CLAUDE_PLUGIN_ROOT}/jm-shared/CAPTURE.md` case 2; see §4). Never record such a deferral *only* as an
+"out of scope / boundary" line in this SPEC or a `JOURNAL.md` note: neither is re-read when that phase is
+discovered, so the thread silently dies. A *boundary* is something the product deliberately excludes
+(recorded in `VISION.md`); deferring something that stays inside the product is sequencing → a seed.
+
 **Before you treat the questions as done, confirm** (`GRILLING.md` → "Confirm before you stop
 questioning"): when the "Open questions" list looks empty, don't jump straight to a finished SPEC —
 name the areas still worth probing (uncovered acceptance criteria, edge cases, failure modes,
@@ -63,7 +71,8 @@ no deliverable and no tests of their own. The user can also checkpoint mid-build
 generously rather than optimistically.
 
 ## 4. Re-planning (if you discover new things)
-If discovery reveals work that doesn't belong in this phase, **don't cut it** — capture it per
+If discovery reveals work that doesn't belong in this phase — a brand-new idea, or a known piece you
+and the user choose to defer to a later phase — **don't cut it**; capture it per
 `${CLAUDE_PLUGIN_ROOT}/jm-shared/CAPTURE.md` (confirm with the user before mutating the ROADMAP; never
 Claude's native memory):
 - A **distinct new capability** → a **new phase** (or reorder/split phases) in the ROADMAP, noted in

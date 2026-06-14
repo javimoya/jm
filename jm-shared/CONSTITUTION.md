@@ -62,6 +62,13 @@ in silence**. When tempted to leave something out you have exactly two honest mo
 phase/task (it's inside the product → sequence it), or take it to the user as a boundary (it's outside
 the product → get an explicit, recorded decision). Never the third move: dropping it quietly.
 
+The two honest moves are also recorded in different places, on purpose. A **boundary** lives in
+`VISION.md` (product exclusion — by design it is *not* re-read later as work to do), while **sequencing
+inside the product** lives as a **seed in `.jm/NOTES.md`** targeting the later phase's `slug` — the only
+record `/jm:discover` re-reads and folds when that phase's turn comes. So "defer it to phase X" is
+sequencing → a seed, never a boundary; parking it as a boundary or a `JOURNAL.md` note is the quiet drop
+in disguise.
+
 ## Safety and reversibility
 
 The no-cuts rule protects the product's *quality*; this protects its *state*. The working tree and the

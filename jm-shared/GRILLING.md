@@ -61,6 +61,12 @@ reverse, surprising without context, and the result of a real trade-off. If one 
 
 ## The anti-scope-cut bar applies here too
 Grilling is **never** a tool for reducing scope. If something "for later" surfaces during the
-interrogation, it is not dropped: it becomes a **new phase** in the ROADMAP or a later task (see
-`CONSTITUTION.md`). Grilling defines the complete product at the agreed bar; it only decides *order*, never
-lowers the *what*.
+interrogation, it is not dropped — it follows the constitution's three moves (`CONSTITUTION.md`,
+`CAPTURE.md`): a **new phase** in the ROADMAP, a later **task**, or — when it belongs to an
+already-planned `pending` phase — a **seed in `.jm/NOTES.md` targeting that phase's `slug`**. That last
+case is the one to watch: deferring a known piece of scope to a later phase is **sequencing, not a
+boundary**, and a `NOTES.md` seed is the *only* record re-read when that phase is later discovered
+(`/jm:discover` §1 reads it, §5 folds it). Recording such a deferral only as an "out of scope" line in
+the SPEC or a `JOURNAL.md` note is a silent drop — neither is read at the target phase's discovery.
+Grilling defines the complete product at the agreed bar; it only decides *order*, never lowers the
+*what*.

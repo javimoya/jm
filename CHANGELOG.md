@@ -3,6 +3,21 @@
 All notable changes to `jm` are recorded here. Versions follow the `version` field in
 `.claude-plugin/plugin.json`.
 
+## 0.5.1
+
+### Fixed
+- **Deferring a decision during `/jm:discover` now leaves a `NOTES.md` seed, like `/jm:capture`.** When
+  grilling defers a known piece of a phase's scope to a later phase (sequencing, not a cut), the decision
+  is recorded as a **seed in `.jm/NOTES.md` targeting that phase's `slug`** — the only record
+  `/jm:discover` re-reads (§1) and folds (§5) when that phase's turn comes. Recording such a deferral
+  only as an "out of scope / boundary" line in the SPEC or a `JOURNAL.md` note was a silent drop: neither
+  is re-read at the target phase's discovery, so the deferred work could be forgotten exactly when it
+  fell due. `GRILLING.md`'s anti-scope-cut bar gains the missing third move (a seed on an already-planned
+  `pending` phase), `commands/discover.md` routes a "defer to a later phase" answer to that seed, and the
+  constitution's **Boundaries vs. cuts** now makes the distinction operational — a *boundary* lives in
+  `VISION.md` (not re-read as future work, by design); *sequencing inside the product* lives as a
+  `NOTES.md` seed.
+
 ## 0.5.0
 
 ### Added
