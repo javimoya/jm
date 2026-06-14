@@ -24,10 +24,12 @@ You work in the project directory (cwd); state lives in `<cwd>/.jm/`.
 - Based on that phase's `status`, read just enough:
   - `pending`/`discovering` → its SPEC if it exists, including the SPEC's "Open questions (working)"
     list (the next unresolved discovery question); otherwise nothing more.
-  - `spec-ready`/`implementing` → `phases/NN/SPEC.md` and `phases/NN/PROGRESS.md` (which task is next;
+  - `spec-ready`/`implementing` → `phases/NN-slug/SPEC.md` and `phases/NN-slug/PROGRESS.md` (which task is next;
     if a FAIL is open, the `Audit N / F-NN` remediation tasks).
-  - `auditing` → `phases/NN/SPEC.md` and `phases/NN/HANDOFF.md` (the draft + the latest audit attempt).
-  - `blocked` → the ROADMAP's `## Blocked phases` block (`From` / `Reason` / `Unblock when`).
+  - `auditing` → `phases/NN-slug/SPEC.md` and `phases/NN-slug/HANDOFF.md` (the draft + the latest audit attempt).
+  - `blocked` → the ROADMAP's `## Blocked phases` block (`From` / `Reason` / `Unblock when`); you'll
+    point the user at the command that owns `From` (discover / build / audit) to resume once `Unblock
+    when` holds (you only read — you never unblock).
 
 ## 3. Give the report (concise)
 In a few lines:
@@ -43,6 +45,6 @@ End with the exact action line, e.g.:
 - *"Phase 01's SPEC is ready for your approval; review it, then `/clear` + `/jm:build`."*
 - *"You're on task 2/3 of phase 01; `/clear` + `/jm:build` to continue."*
 - *"Phase 01 is implemented; `/clear` + `/jm:audit` to close it."*
-- *"Phase 03 is blocked (waiting on {unblock condition}); nothing to do until that holds."*
+- *"Phase 03 is blocked (From: implementing; waiting on {unblock condition}); when it holds, `/clear` + `/jm:build` to resume."*
 
 **Do not** modify any file.

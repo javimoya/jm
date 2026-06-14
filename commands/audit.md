@@ -20,7 +20,9 @@ judge). Otherwise **stop** and route:
 - `pending`/`discovering`/`spec-ready` → not built yet → `/jm:discover` or `/jm:build`.
 - `implementing` → still being built → `/jm:build`.
 - `done` → already audited and closed → `/jm:discover` for the next phase.
-- `blocked` → surface `Reason` / `Unblock when` from the ROADMAP's `## Blocked phases` and stop.
+- `blocked` → surface `Reason` / `Unblock when` from the ROADMAP's `## Blocked phases`. If `From` is
+  `auditing` and the user confirms `Unblock when` now holds, **unblock** per `ROADMAP-FORMAT.md`'s
+  "Blocking & unblocking" (restore `From`, delete the block, log it) and proceed; otherwise stop.
 
 ## Independence rule + review boundary
 You ran with a **forked context** (`context: fork`) — judge the result against the contract, not the
@@ -28,12 +30,19 @@ implementer's intentions. Read **only**: `.jm/PRINCIPLES.md`, `.jm/RUNBOOK.md`, 
 (criteria + their evidence types + deliverable), the `HANDOFF.md` draft, and the **code in scope**.
 From `PROGRESS.md` read **only the Build provenance + the task table** — not the per-task reasoning.
 
-**Reconstruct the boundary** from that provenance, so you review exactly the phase's work — not the
-whole tree, not the user's own edits:
-- **In scope**: changes to the **owned paths** since the **base commit**.
+**Reconstruct the boundary** from that provenance — the **owned paths** are the authoritative scope;
+the base commit is just how you *see* the changes when git exists. Review exactly the phase's work,
+not the whole tree, not the user's own edits:
+- **With git**: diff the **owned paths** against the **base commit** in the **working tree**
+  (`git diff <base commit> -- <owned paths>`) — the phase's work is uncommitted, and that's fine;
+  **never commit to form the boundary**. Also flag any change *outside* the owned paths since the base
+  commit (undeclared work or scope creep) as a finding.
+- **Without git** (`base commit` = `unversioned`): there is no diff — review the **current state of the
+  owned paths** against the SPEC ("pre-existing dirty paths" doesn't apply without a VCS).
 - **Out of scope**: the **pre-existing dirty paths** (the user's) and anything the phase didn't touch.
-- If provenance is missing or ambiguous, that is itself a **finding** — don't guess a boundary and
-  don't infer the phase is clean; **fail closed** until a real boundary exists.
+- **Fail closed** only when **no** boundary can be formed — neither a base commit nor a non-empty owned
+  paths list. A missing/ambiguous scope is a **finding**; don't guess a boundary or infer the phase is
+  clean.
 
 ## 1. Verify it meets the contract
 - **Run the RUNBOOK full suite** yourself. It must be green; check the delta against the HANDOFF's
@@ -71,6 +80,12 @@ the end). **Never edit or delete an earlier attempt** — a PASS keeps every pri
   condition**. Then **materialize the work**: add one task per finding, named `Audit N / F-NN — …`, to
   both `PROGRESS.md` and the SPEC task plan, and set the first `in-progress`. Set `status` →
   `implementing`. The phase **does not close**.
+
+## Checkpoint (when wrapped mid-audit)
+If a session is **wrapped** before a verdict, this is not a PASS/FAIL: persist the findings checked so
+far as notes in the `HANDOFF.md` draft (no finalized `Attempt` block, attempt count unchanged), keep
+`status` `auditing`, and note what's still unverified. The next session re-audits from the top. This is
+the cut-path `/jm:wrap` delegates to for `auditing`.
 
 ## Close — ritual + breadcrumb
 Run the close ritual (`${CLAUDE_PLUGIN_ROOT}/jm-shared/CLOSE-FORMAT.md`): finalize the HANDOFF verdict and the

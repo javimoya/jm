@@ -15,12 +15,18 @@ new ritual.
 
 ## 0. Precondition — what's in flight?
 Read the active phase's `status` in `.jm/ROADMAP.md` (and glance at the live conversation for what you
-were doing). The `status` tells you which command was running and how to cut:
+were doing). The `status` — and *why* you're stopping — tells you which command was running and how to cut:
 - `implementing` → you were in `/jm:build`. Cut per **`build.md` §5**.
 - `discovering` → you were in `/jm:discover`. Cut per **`discover.md`** (the "Open questions" queue).
-- `auditing` → you were in `/jm:audit`. Persist partial findings into the `HANDOFF.md` draft.
+- `auditing` → you were in `/jm:audit`. Cut per **`audit.md`** ("Checkpoint (when wrapped mid-audit)").
 - **mid-`/jm:ideate`** (no phase rows yet, or VISION/ROADMAP being drafted) → persist the partial
   VISION/ROADMAP.
+- **Stopping because of an external wall** (a missing credential, a third party, a product decision
+  only the user can make) → this is a **block**, not a plain checkpoint. Propose blocking per
+  `${CLAUDE_PLUGIN_ROOT}/jm-shared/ROADMAP-FORMAT.md`'s "Blocking & unblocking": `From` = the working status, name
+  `Reason` / `Unblock when`, get the user's go (see §2).
+- **Already `blocked`** → the phase is paused with its memory intact; persist nothing new, restate the
+  block, and route to `/jm:orient`.
 - **Nothing in flight** (`pending` / `spec-ready` / `done`, a clean tree, or no `.jm/`): there is
   nothing to checkpoint. Say so and route to `/jm:orient`. Don't manufacture work.
 
@@ -43,6 +49,9 @@ Persist exactly what the active command owns, following that command's own check
   is still unverified. `status` stays `auditing` (no verdict — wrapping is not a PASS/FAIL).
 - **ideate**: make `VISION.md` / `ROADMAP.md` consistent with whatever was decided so far; leave any
   new phases `pending`.
+- **block** (stopping on an external wall): after the user's go, persist the active command's partial
+  work (the matching bullet above), then set `status` → `blocked` and write the `## Blocked phases`
+  block (`From` = the working status, `Reason`, `Unblock when`) per `ROADMAP-FORMAT.md`.
 
 ## Close — ritual + breadcrumb
 Run the close ritual (`${CLAUDE_PLUGIN_ROOT}/jm-shared/CLOSE-FORMAT.md`, the **"Cut sessions"** path): the

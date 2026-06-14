@@ -3,6 +3,42 @@
 All notable changes to `jm` are recorded here. Versions follow the `version` field in
 `.claude-plugin/plugin.json`.
 
+## 0.3.1
+
+Follow-up hardening on 0.3.0: a real lifecycle for `blocked`, a graceful audit boundary for non-git
+projects, a shared-rule cleanup pass, and a batch of contract/bug fixes surfaced by review.
+
+### Added
+- **`blocked` is now a first-class, writable lifecycle.** Previously the state was only ever *read* —
+  nothing set or cleared it. A single "Blocking & unblocking" rule in `ROADMAP-FORMAT.md` now defines
+  it end to end: it's only for an external wall the session can't clear (a missing credential, a third
+  party, a product decision only the user can make) — never a way to defer buildable work; a working
+  command (or `/jm:wrap`) **proposes** the block and the user confirms; the command that owns `From`
+  later restores it on confirmation; `/jm:orient` is the read-only radar. `build`/`discover`/`audit`/
+  `wrap` reference the rule.
+
+### Changed
+- **Audit boundary degrades gracefully without git.** `owned paths` is the authoritative review scope;
+  with git the audit diffs them against the base commit in the working tree (and flags changes outside
+  scope), and with no VCS it reviews the current state of the owned paths. It fails closed only when no
+  boundary can be formed at all.
+- **Never commit to establish a baseline or boundary** — pinned in `/jm:build` and `/jm:audit`, so the
+  user's pre-existing changes are never entangled by a commit jm made.
+- **Shared rules consolidated** (cleanup pass): the phase-selection rule and the "phase mutability"
+  rule now live once in `ROADMAP-FORMAT.md` and are referenced by the commands; leftover "perfect
+  product" wording was aligned with the "agreed bar" constitution; the commit policy and grilling
+  protocol no longer derive from a parent `CLAUDE.md`.
+
+### Fixed
+- `/jm:orient` read phase files from `phases/NN/` instead of the real `phases/NN-slug/` directory.
+- `/jm:wrap` now delegates the mid-audit checkpoint to a real section in `/jm:audit` and handles the
+  `blocked` case instead of falling through to a no-op.
+- `/jm:discover`'s no-argument phase selection now resumes the active phase before scanning pending.
+- `RUNBOOK-FORMAT.md` claimed the RUNBOOK was scaffolded by `/jm:ideate`; it's created lazily in
+  `/jm:discover` or `/jm:build` (matching `ideate`).
+- `install.sh` backups no longer collide when the script runs twice in the same second.
+- `tests/check_commands.py` parses each command's frontmatter once instead of twice.
+
 ## 0.3.0
 
 Robustness and safety pass. The workflow stays a pure-Markdown set of prompts — `ROADMAP.md` remains

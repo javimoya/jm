@@ -96,7 +96,7 @@ Reached from §0 when a ROADMAP with phases already exists. You're **re-planning
 - **Granularity of the new work:** apply §5's question to just the **new** phases (Lean / Balanced /
   Thorough → ~N phases, Balanced recommended). Skip it if only one phase emerges.
 - **Changelog discipline:** add one dated line to the ROADMAP's `## Structural changelog` per
-  structural change (add / split / reorder), as required by `ROADMAP-FORMAT.md`.
+  structural change (add / split / reorder / block / unblock), as required by `ROADMAP-FORMAT.md`.
 
 ## Close — present, then ritual + breadcrumb
 **1. Present the roadmap to the user.** Before persisting anything, walk them through the final plan so

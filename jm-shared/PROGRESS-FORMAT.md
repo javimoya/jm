@@ -10,11 +10,13 @@ lets you `/clear` and resume cleanly. Terse is fine; unambiguous is mandatory.
 
 ## Build provenance
 {Written by /jm:build before the first code change, then never rewritten (only "Owned paths" grows).
-This is the boundary /jm:audit reviews against.}
+The **owned paths** are the boundary /jm:audit reviews against; the base commit is just how audit sees
+the changes when git exists.}
 - **Base commit**: {git HEAD when the build started, or `unversioned` if not a git repo / no commits}
 - **Pre-existing dirty paths**: {paths already modified or untracked when the build started — the
-  user's, NOT this build's. Off-limits: build/audit/wrap never revert these.}
-- **Owned paths**: {files this build created or changed — grows as tasks proceed}
+  user's, NOT this build's. Off-limits: build/audit/wrap never revert these. Empty / n.a. without a VCS.}
+- **Owned paths**: {files this build created or changed — grows as tasks proceed; the authoritative
+  audit scope, especially when there's no base commit to diff against}
 
 ## Task state
 

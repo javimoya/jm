@@ -20,11 +20,14 @@ Shared protocols in `${CLAUDE_PLUGIN_ROOT}/jm-shared/` (`GRILLING.md`, `CONTEXT-
 - Read `.jm/ROADMAP.md`, `.jm/CONTEXT.md`, `.jm/adr/`, `.jm/RUNBOOK.md` (if present), and the
   SPEC/HANDOFF of neighbouring phases (so you don't contradict what's already decided).
 - **Pick the phase** per `${CLAUDE_PLUGIN_ROOT}/jm-shared/ROADMAP-FORMAT.md`'s **Active phase & selection** rule
-  (the named argument, else the lowest ready `pending`; an explicit phase that isn't the active one →
-  **stop** and report the conflict). Set its `status` → `discovering` (it becomes the single active phase).
+  (the named argument, else the active phase, else the lowest ready `pending`; an explicit phase that
+  isn't the active one → **stop** and report the conflict). Set its `status` → `discovering` (it becomes the single active phase).
 - **Guard**: if the chosen phase is already `spec-ready`/`implementing`/`done`, it already has a SPEC
   (and maybe code). Don't silently re-discover and clobber it: say so and confirm with the user first,
-  or route (`spec-ready` → `/jm:build`; `done` → the next phase).
+  or route (`spec-ready` → `/jm:build`; `done` → the next phase). If it's `blocked`, surface the block
+  and unblock per `ROADMAP-FORMAT.md`'s "Blocking & unblocking" (confirm `Unblock when`, restore
+  `From`) only with the user's ok, else stop. If discovery itself hits an external wall, propose a
+  block the same way rather than guessing.
 
 ## 2. Grill the phase (the `GRILLING.md` protocol)
 One question at a time, with your recommended answer, exploring the code when the answer is there.

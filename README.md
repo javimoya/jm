@@ -122,7 +122,7 @@ Each phase moves through a strict state machine, tracked in `ROADMAP.md`:
 pending → discovering → spec-ready → implementing → auditing → done
 ```
 
-- `blocked` can be reached from any state. It remembers where it came from, why, and what has to happen to unblock. Unblocking puts the phase back exactly where it was.
+- `blocked` is a first-class pause for an external wall you can't clear yourself — a missing credential, a third party, a product decision only you can make. jm proposes it and you confirm; it's never a way to quietly defer buildable work, and it can't touch a `done` phase. It remembers where it came from, why, and what has to happen to unblock — and unblocking puts the phase back exactly where it was.
 - The only step backward is `auditing → implementing`: an audit **FAIL**, which turns each finding into a concrete remediation task you can track.
 
 This is what lets the skills route themselves: run `/jm:build` on a phase that isn't ready and it stops and points you to `/jm:discover`.

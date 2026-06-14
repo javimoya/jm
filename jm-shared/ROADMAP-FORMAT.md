@@ -45,10 +45,24 @@ moment it is unblocked. This is the memory a flat `blocked` status would otherwi
   **lowest-numbered `pending` whose every `depends on` phase is `done`**; a `pending` phase with an
   unfinished dependency is not yet selectable. A command given an explicit phase id/slug that is not
   the active phase must **not** start parallel work — it reports the conflict and stops.
-- **`blocked` carries memory.** `blocked` may be entered from any state, but never as a flat label:
-  record `From` / `Reason` / `Unblock when` in the `## Blocked phases` section. Unblocking restores
-  the `From` status **exactly** and deletes the block. A reason with no observable unblock condition
-  is malformed (it creates a permanent, ambiguous block).
+- **`blocked` carries memory.** `blocked` is **only** for an external obstruction the session cannot
+  remove (a third party, a missing credential/API, a product decision only the user can make) — never
+  a way to defer buildable work (that decomposes into a task or becomes a recorded boundary). It is
+  never a flat label: record `From` / `Reason` / `Unblock when` in the `## Blocked phases` section,
+  where `Unblock when` is a concrete, observable **external** condition. A reason with no such
+  condition is malformed (a permanent, ambiguous block).
+- **Blocking & unblocking (who, how).** `blocked` may be entered from any state **except `done`**
+  (`done` is closed — reopen via a new phase/task, never by blocking).
+  - **Enter (propose → confirm):** when a working command — or `/jm:wrap` — hits a real external wall,
+    it **proposes** the block (`From` = the current status, `Reason`, `Unblock when`) and waits for the
+    user's go/no-go; only then does it set `status` → `blocked`, persist any in-flight work, and run
+    the close ritual. Setting `blocked` is a state mutation, so it always carries the user's assent
+    (the user may also request it directly). Log it in the changelog.
+  - **Exit (confirm → restore):** `/jm:orient` (read-only) only *notices* a block and points at the
+    command that owns `From` (`/jm:discover` for `pending`/`discovering`, `/jm:build` for
+    `spec-ready`/`implementing`, `/jm:audit` for `auditing`). That command does the unblock: it confirms
+    with the user that `Unblock when` now holds, then restores `From` **exactly**, deletes the block,
+    logs it, and continues. No command unblocks on its own guess of an external condition.
 - **Column contract.** Exactly these columns, in order: `#`, `slug`, `title`, `status`,
   `depends on`, `deliverable`. `#` is zero-padded and monotonic. `slug` is kebab-case, stable, and
   matches the `phases/NN-slug/` directory.
@@ -63,5 +77,5 @@ moment it is unblocked. This is the memory a flat `blocked` status would otherwi
   history; never change its `#` or `slug`. Renumber/reorder within the `pending` set only (keep `#`
   zero-padded and monotonic, never colliding with a frozen `#`); if a clean renumber isn't possible,
   **append** instead. Never delete a phase (that's a cut).
-- **Changelog discipline.** Every structural change (add / split / reorder / block) gets one dated
-  line. The changelog is how a future session reconstructs how the plan evolved.
+- **Changelog discipline.** Every structural change (add / split / reorder / block / unblock) gets one
+  dated line. The changelog is how a future session reconstructs how the plan evolved.

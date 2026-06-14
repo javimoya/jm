@@ -3,8 +3,8 @@
 `.jm/RUNBOOK.md` pins **how this project is run and verified**, so every clean session executes the
 *same* commands instead of re-guessing them. `/jm:build` runs the full suite from here for its
 baseline; `/jm:audit` runs the same one to verify — if each invented its own command, "green" would
-mean different things in different sessions. Scaffolded by `/jm:ideate`, kept current by
-`/jm:discover` and `/jm:build` as the stack solidifies.
+mean different things in different sessions. Created **lazily** — first pinned in `/jm:discover` or
+`/jm:build` when a real run/test command exists — and kept current as the stack solidifies.
 
 ## Structure
 

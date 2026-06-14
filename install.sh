@@ -26,16 +26,30 @@ fi
 stamp="$(date +%Y%m%d-%H%M%S)"
 echo "Installing jm (manual / non-plugin method)"
 
+# A backup path that doesn't already exist — avoids collisions when install.sh runs more than once
+# in the same second (the stamp has 1-second resolution; a colliding `mv` would nest the install
+# inside its own backup or abort mid-run under `set -e`).
+backup_path() {
+  local candidate="$1.bak.$stamp" n=1
+  while [ -e "$candidate" ]; do
+    candidate="$1.bak.$stamp.$n"
+    n=$((n + 1))
+  done
+  printf '%s' "$candidate"
+}
+
 if [ -e "$CMD_DEST" ]; then
-  mv "$CMD_DEST" "$CMD_DEST.bak.$stamp"
-  echo "  • backed up existing commands/jm -> commands/jm.bak.$stamp"
+  bak="$(backup_path "$CMD_DEST")"
+  mv "$CMD_DEST" "$bak"
+  echo "  • backed up existing commands/jm -> $(basename "$bak")"
 fi
 mkdir -p "$CMD_DEST"
 cp -R "$CMD_SRC"/. "$CMD_DEST"/
 
 if [ -e "$SHARED_DEST" ]; then
-  mv "$SHARED_DEST" "$SHARED_DEST.bak.$stamp"
-  echo "  • backed up existing jm-shared -> jm-shared.bak.$stamp"
+  bak="$(backup_path "$SHARED_DEST")"
+  mv "$SHARED_DEST" "$bak"
+  echo "  • backed up existing jm-shared -> $(basename "$bak")"
 fi
 mkdir -p "$SHARED_DEST"
 cp -R "$SHARED_SRC"/. "$SHARED_DEST"/

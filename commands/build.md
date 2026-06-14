@@ -22,8 +22,9 @@ else the active phase, else the lowest ready `pending`; an explicit phase that i
   tasks — nothing else — then return to audit via §6.
 - `auditing`/`done` → already built. Say so and route to `/jm:audit` (or `/jm:discover` for the next
   phase).
-- `blocked` → don't build. Surface `Reason` / `Unblock when` from the ROADMAP's `## Blocked phases`
-  memory and stop; it is cleared (restoring `From`) only once the condition holds.
+- `blocked` → surface `Reason` / `Unblock when` from the ROADMAP's `## Blocked phases`. If `From` is a
+  build state and the user confirms `Unblock when` now holds, **unblock** per `ROADMAP-FORMAT.md`'s
+  "Blocking & unblocking" (restore `From`, delete the block, log it) and proceed; otherwise stop.
 
 ## 1. Constitution + context load
 - Read `.jm/PRINCIPLES.md`. **Internalize it**: full bar inside the agreed product; **effort is never
@@ -43,7 +44,8 @@ never mistaken for "not started", and the user's own changes are never blamed on
 1. **Record provenance** in `PROGRESS.md` (create it per `${CLAUDE_PLUGIN_ROOT}/jm-shared/PROGRESS-FORMAT.md`): the
    **base commit** (`git rev-parse HEAD`, or `unversioned` if not a git repo / no commits), the
    **pre-existing dirty paths** (`git status --porcelain` — the user's, off-limits), and an empty
-   **owned paths** list.
+   **owned paths** list. **Never commit** to set this baseline or boundary — the base commit + owned
+   paths make it unnecessary, and committing would entangle the user's pre-existing changes.
 2. **Flip state**: set the phase `status` → `implementing` and mark it active in the ROADMAP; write the
    task table with the current task `in-progress`.
 3. **Persist** ROADMAP + PROGRESS now. Only then continue.
@@ -72,6 +74,10 @@ never mistaken for "not started", and the user's own changes are never blamed on
   known-good state of **your own** step and re-sequence; don't patch over a broken base. Never reach for
   the blunt instruments to "get clean" (PRINCIPLES → "Safety and reversibility") — they destroy the
   user's pre-existing changes.
+- **Hit an external wall?** If progress is stopped by something outside the session's control (a
+  missing credential, a third party, a product decision only the user can make) — *not* a buildable
+  gap — **propose blocking** per `${CLAUDE_PLUGIN_ROOT}/jm-shared/ROADMAP-FORMAT.md`'s "Blocking & unblocking"
+  instead of cutting or faking: get the user's go, persist, set `blocked`, and close.
 
 ## 5. Checkpoint & task splitting
 You **cannot reliably measure your own context usage**, so don't try to gate on a percentage. Two
