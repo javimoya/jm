@@ -1,7 +1,6 @@
 ---
 description: Low-level discovery of ONE phase of a .jm/ project. Grills to produce the phase's SPEC (goal, vertical slice, testable acceptance criteria, deliverable and "How to see it", and a task plan sized so each task fits one fresh build session). Sharpens CONTEXT/ADRs inline and, if it discovers new things, mutates the ROADMAP. Use it at the start of a phase, before /jm:build.
 model: inherit
-effort: xhigh
 disable-model-invocation: true
 argument-hint: "[phase-id-or-slug]"
 ---

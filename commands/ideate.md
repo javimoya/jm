@@ -1,7 +1,6 @@
 ---
 description: Kicks off a large project from a vague idea, or extends one already in progress. Runs divergent brainstorming (proposes ideas, alternatives, and prior art you hadn't thought of) and then convergent grilling, and scaffolds the .jm/ directory (VISION, PRINCIPLES, ROADMAP of vertical-slice phases, CONTEXT). Use it when starting a new project orchestrated with this framework, to extend an in-progress one with new features or ideas (it re-plans the pending phases), or to re-vision an existing one. It is the first stage; the later ones are /jm:discover, /jm:build, /jm:audit.
 model: inherit
-effort: xhigh
 disable-model-invocation: true
 ---
 

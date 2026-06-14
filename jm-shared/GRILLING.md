@@ -11,8 +11,8 @@ and forcing precision.
   time (decision A constrains B; settle A first).
 - **One question at a time.** Wait for the answer before continuing. No batteries of questions.
 - **For every question, give your recommended answer** and why, plus the alternatives you weighed and
-  why they lose (aligned with the repo's `CLAUDE.md`: lead with the recommendation). A question
-  without a recommendation is work you're pushing back onto the user.
+  why they lose — lead with the recommendation. A question without a recommendation is work you're
+  pushing back onto the user.
 - **If a question can be answered by exploring, explore** the code and docs instead of asking. Don't
   ask what you can find out yourself.
 - Use the harness's question tool for clean forks, but always leave the door open to free-form

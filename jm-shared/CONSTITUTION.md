@@ -81,7 +81,7 @@ didn't create.
   passwords, or unnecessary PII into SPEC/PROGRESS/HANDOFF/JOURNAL/RUNBOOK — record the *name* of an
   env var, never its value.
 
-The repo's `CLAUDE.md`, when present, may deepen this; the floor above always applies.
+Your project's `CLAUDE.md`, when present, may deepen this; the floor above always applies.
 
 ## Each phase's contract
 

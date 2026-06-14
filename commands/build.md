@@ -1,7 +1,6 @@
 ---
 description: Implements a phase of a .jm/ project to the highest bar — no scope cuts, no tech debt, no "v1/v2" — one task at a time, with tests covering the acceptance criteria and a runnable deliverable. Checkpoints to PROGRESS.md at task boundaries or whenever you tell it to wrap up, carving unfinished work into a new follow-up task. Use it after the phase SPEC is approved, or to continue the next task.
 model: inherit
-effort: xhigh
 disable-model-invocation: true
 argument-hint: "[phase-id-or-slug]"
 ---

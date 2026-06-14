@@ -1,7 +1,6 @@
 ---
 description: Checkpoints and hands off the working session you're in the middle of — when context is degrading or you want to pause — without losing anything in progress. Detects what was running from the ROADMAP status and runs that command's own cut-path (build carves the remainder into a follow-up task; discover saves its open questions; audit saves partial findings; ideate persists the partial vision/roadmap), then the shared close ritual and a breadcrumb naming the exact resume point. Use it mid-/jm:build, /jm:discover, /jm:audit, or /jm:ideate instead of stopping abruptly; then /clear and continue in a fresh session.
 model: inherit
-effort: xhigh
 disable-model-invocation: true
 ---
 

@@ -22,9 +22,10 @@ ROADMAP, the JOURNAL, and the breadcrumb from drifting apart between clean sessi
 
 ## Commit (the user's call)
 
-Committing is **not** part of the ritual. Per the repo's `CLAUDE.md`, commit only when the user asks.
-If they have, commit the touched files with a short imperative message after step 4; otherwise leave
-the tree as is and let the breadcrumb stand. Never auto-commit, push, or take any outward action here.
+Committing is **not** part of the ritual. jm's default is to **never commit, push, or take any
+outward action on its own** — leave the tree as is and let the breadcrumb stand. Commit **only when
+the user explicitly asks**; if they do, honor any commit conventions in the project's own `CLAUDE.md`
+(when it has one) and use a short imperative message after step 4. Never auto-commit or push.
 
 ## Cut sessions (wrap-up)
 
