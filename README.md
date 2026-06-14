@@ -16,7 +16,7 @@ Once installed, the commands live under the `jm` namespace: `/jm:ideate`, `/jm:d
 
 Building something big with an AI agent usually falls apart in a few predictable ways.
 
-**You didn't fully say what you wanted.** The most common way agent work disappoints isn't bad code — it's an underspecified ask. You describe what you want loosely, the agent fills the gaps with its own assumptions, and the result isn't what you had in mind.
+**You didn't fully say what you wanted.** The most common way agent work disappoints isn't bad code. It's an underspecified ask. You describe what you want loosely, the agent fills the gaps with its own assumptions, and the result isn't what you had in mind.
 
 **Scope quietly shrinks.** "I'll stub this for now," "v1 is fine," "good enough," and the thing you end up with is full of holes.
 
@@ -24,15 +24,15 @@ Building something big with an AI agent usually falls apart in a few predictable
 
 **You lose your place.** You come back the next day and neither you nor the agent can remember where things stood.
 
-**Nobody remembers why.** A decision you made last week goes invisible this week, so the agent re-guesses it — or you quietly contradict it without noticing.
+**Nobody remembers why.** A decision you made last week goes invisible this week, so the agent re-guesses it, or you quietly contradict it without noticing.
 
 `jm` handles each of these as a method rather than a model:
 
-- **A supercharged [`grill-me`](https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md).** Before any code, it interrogates you one question at a time — each with its recommended answer — until what you want is *completely and precisely defined*, so the agent never has to guess. And it diverges first: surfacing options, prior art, and out-of-the-box ideas, so it doesn't just capture your idea — it helps you discover the things you hadn't thought of. Woven through `/jm:ideate` and `/jm:discover`, it always checks in before it stops rather than quietly deciding you're done.
+- **A supercharged [`grill-me`](https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md).** Before any code, it interrogates you one question at a time, each with its recommended answer, until what you want is *completely and precisely defined*, so the agent never has to guess. And it diverges first: surfacing options, prior art, and ideas you might not have considered, so it doesn't just capture your idea, it helps you discover the things you hadn't thought of. Woven through `/jm:ideate` and `/jm:discover`, it always checks in before it stops rather than quietly deciding you're done.
 - A **constitution** that bans cuts and turns "later" into "a new phase" instead of a quiet deletion.
 - **Phases**: vertical slices, each one built and verified in its own fresh session with clean context.
 - A **`.jm/` folder** in your repo that holds the single source of truth. Any new session rebuilds the full picture by reading it.
-- **Every decision on the record.** The *why* behind hard calls becomes an ADR and your domain terms a glossary, so a fresh agent acts on your past reasoning instead of guessing — and can flag it when a new ask contradicts a call you already made.
+- **Every decision on the record.** The *why* behind hard calls becomes an ADR and your domain terms a glossary, so a fresh agent acts on your past reasoning instead of guessing, and can flag it when a new ask contradicts a call you already made.
 
 ---
 
@@ -128,7 +128,7 @@ Each phase moves through a strict state machine, tracked in `ROADMAP.md`:
 pending → discovering → spec-ready → implementing → auditing → done
 ```
 
-- `blocked` is a first-class pause for an external wall you can't clear yourself — a missing credential, a third party, a product decision only you can make. jm proposes it and you confirm; it's never a way to quietly defer buildable work, and it can't touch a `done` phase. It remembers where it came from, why, and what has to happen to unblock — and unblocking puts the phase back exactly where it was.
+- `blocked` is a first-class pause for an external wall you can't clear yourself: a missing credential, a third party, or a product decision only you can make. jm proposes it and you confirm; it's never a way to quietly defer buildable work, and it can't touch a `done` phase. It remembers where it came from, why, and what has to happen to unblock. Unblocking puts the phase back exactly where it was.
 - The only step backward is `auditing → implementing`: an audit **FAIL**, which turns each finding into a concrete remediation task you can track.
 
 This is what lets the skills route themselves: run `/jm:build` on a phase that isn't ready and it stops and points you to `/jm:discover`.
