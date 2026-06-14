@@ -3,6 +3,14 @@
 All notable changes to `jm` are recorded here. Versions follow the `version` field in
 `.claude-plugin/plugin.json`.
 
+## 0.4.3
+
+### Changed
+- **README highlights documented decisions as a strength.** The "Why" section gains a fifth
+  failure-mode/method pair: "nobody remembers why" → every decision goes on the record (ADRs for the
+  *why*, a glossary for the terms), so a fresh agent acts on past reasoning instead of guessing and can
+  flag when a new ask contradicts an earlier call.
+
 ## 0.4.2
 
 ### Changed
